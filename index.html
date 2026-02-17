@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AFC | Ramadan Specialist Diet System</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        :root { 
+            --gold: #d4af37; 
+            --dark: #000000; 
+            --deep-green: #04160f;
+            --accent-green: #27ae60;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            font-family: 'Poppins', sans-serif; background-color: var(--dark); 
+            color: #fff; margin: 0; padding: 10px; display: flex; justify-content: center;
+        }
+
+        .app-container { 
+            width: 100%; max-width: 450px; background: var(--deep-green); 
+            border: 1px solid var(--gold); border-radius: 35px; padding: 25px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8); min-height: 90vh;
+            position: relative;
+        }
+
+        /* Branding Header */
+        .header { text-align: center; margin-bottom: 25px; }
+        .badge { background: var(--gold); color: #000; padding: 3px 12px; border-radius: 20px; font-size: 10px; font-weight: 800; text-transform: uppercase; }
+        .header h1 { margin: 10px 0 0 0; font-size: 24px; letter-spacing: 2px; color: var(--gold); }
+        .header p { font-size: 11px; color: #666; margin: 5px 0; }
+
+        /* Input Controls */
+        .inputs { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+        input { 
+            background: #111; border: 1px solid #333; color: white; padding: 15px; 
+            border-radius: 12px; font-size: 16px; outline: none; transition: 0.3s;
+        }
+        input:focus { border-color: var(--gold); }
+
+        /* Goal Toggle */
+        .toggle-row { display: flex; background: #000; padding: 5px; border-radius: 15px; margin-bottom: 20px; }
+        .t-btn { flex: 1; padding: 12px; border: none; border-radius: 10px; background: none; color: #555; font-weight: bold; cursor: pointer; }
+        .t-btn.active { background: var(--gold); color: #000; }
+
+        /* Plan Section */
+        #resultsView { display: none; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .stat-card { background: rgba(212, 175, 55, 0.1); border: 1px solid var(--gold); padding: 12px; border-radius: 15px; text-align: center; margin-bottom: 15px; }
+        .meal-box { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 15px; margin-bottom: 12px; border-left: 4px solid var(--gold); }
+        .meal-box h3 { margin: 0 0 5px 0; font-size: 16px; color: var(--gold); display: flex; justify-content: space-between; }
+        .meal-box p { margin: 0; font-size: 14px; color: #bbb; line-height: 1.5; }
+
+        /* Footer Dua */
+        .dua-section { text-align: center; border-top: 1px solid #222; margin-top: 25px; padding-top: 15px; }
+        .dua-arabic { font-size: 12px; color: #888; font-style: italic; }
+        .dua-hin { font-size: 11px; color: var(--gold); margin-top: 5px; display: block; }
+        .gym-time { font-size: 11px; font-weight: bold; color: var(--accent-green); margin-top: 10px; display: block; }
+
+        /* Floating PDF Action */
+        .pdf-fab { 
+            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; 
+            background: var(--accent-green); border-radius: 50%; border: none; 
+            display: none; align-items: center; justify-content: center; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5); z-index: 999;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="header">
+        <span class="badge">Ramadan Specialist</span>
+        <h1>AZHAR FITNESS</h1>
+        <p>HOME FOOD DIET SYSTEM</p>
+    </div>
+
+    <div class="inputs">
+        <input type="text" id="memName" placeholder="Member Name">
+        <input type="number" id="memWeight" placeholder="Weight (kg) to unlock diet" oninput="generatePlan()">
+    </div>
+
+    <div class="toggle-row">
+        <button id="loss" class="t-btn active" onclick="setGoal('loss')">FAT LOSS</button>
+        <button id="gain" class="t-btn" onclick="setGoal('gain')">WEIGHT GAIN</button>
+    </div>
+
+    <div id="resultsView">
+        <div class="stat-card">
+            <span id="protSummary" style="font-weight: bold; color: var(--gold);"></span>
+        </div>
+
+        <div class="meal-box">
+            <h3>🌙 SAHUR <span>(Pre-Dawn)</span></h3>
+            <p id="sahurHtml"></p>
+        </div>
+
+        <div class="meal-box">
+            <h3>🕌 IFTARI <span>(Fast Break)</span></h3>
+            <p id="iftarHtml"></p>
+        </div>
+
+        <div class="meal-box">
+            <h3>🍽️ DINNER <span>(Main Meal)</span></h3>
+            <p id="dinnerHtml"></p>
+        </div>
+
+        <div class="dua-section">
+            <span class="dua-arabic">"Allahumma laka sumtu wa 'ala rizqika aftartu"</span>
+            <span class="dua-hin">Ya Allah, Maine tere liye Roza rakha aur tere diye rizq se Iftar kiya.</span>
+            <span class="gym-time">GYM TIMINGS: 07:00 PM – 01:00 AM</span>
+        </div>
+    </div>
+</div>
+
+<button class="pdf-fab" id="pdfBtn" onclick="downloadPDF()">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+</button>
+
+<script>
+    let currentGoal = 'loss';
+
+    function setGoal(g) {
+        currentGoal = g;
+        document.getElementById('loss').className = g === 'loss' ? 't-btn active' : 't-btn';
+        document.getElementById('gain').className = g === 'gain' ? 't-btn active' : 't-btn';
+        generatePlan();
+    }
+
+    function generatePlan() {
+        const name = document.getElementById('memName').value || "Warrior";
+        const weight = document.getElementById('memWeight').value;
+        const view = document.getElementById('resultsView');
+        const fab = document.getElementById('pdfBtn');
+
+        if (weight > 30) {
+            view.style.display = 'block';
+            fab.style.display = 'flex';
+            const protein = (weight * 2.2).toFixed(0);
+            document.getElementById('protSummary').innerText = `LOCKED: ${protein}G PROTEIN / DAY`;
+
+            if (currentGoal === 'loss') {
+                document.getElementById('sahurHtml').innerHTML = "• 5-6 Egg Whites (Uble hue)<br>• 1 Jowar Roti + 1 Bowl Dahi<br>• 1 Apple + 1L Pani.";
+                document.getElementById('iftarHtml').innerHTML = "• 2 Dates + Nimbu Pani<br>• 1 Bowl Bhuna Chana + Watermelon.<br>• ❌ Avoid Oil/Sugar.";
+                document.getElementById('dinnerHtml').innerHTML = "• 200g Home-style Chicken or Paneer<br>• Full Bowl Green Salad.<br>• No Rice/Roti at night.";
+            } else {
+                document.getElementById('sahurHtml').innerHTML = "• 3 Whole Eggs + 1 Bowl Dahi<br>• 2 Parathe + 1 Glass Doodh<br>• 1 Banana + 10 Almonds.";
+                document.getElementById('iftarHtml').innerHTML = "• 3 Dates + 1 Glass Milkshake<br>• 1 Bowl Fruit Salad + Chana Chaat.";
+                document.getElementById('dinnerHtml').innerHTML = "• Chicken or Paneer Curry<br>• 2 Bowls Rice + 1 Bowl Dal.";
+            }
+        } else {
+            view.style.display = 'none';
+            fab.style.display = 'none';
+        }
+    }
+
+    async function downloadPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        const name = document.getElementById('memName').value || "Athlete";
+        const w = document.getElementById('memWeight').value;
+
+        doc.setFillColor(5, 20, 15); doc.rect(0, 0, 210, 297, 'F');
+        doc.setTextColor(212, 175, 55); doc.setFontSize(22);
+        doc.text("AZHAR FITNESS - RAMADAN SPECIALIST", 105, 30, { align: "center" });
+        doc.setTextColor(255, 255, 255); doc.setFontSize(14);
+        doc.text(`Diet Plan for: ${name} (${w}kg)`, 20, 50);
+        doc.line(20, 55, 190, 55);
+        doc.save(`AFC_Ramadan_${name}.pdf`);
+    }
+</script>
+
+</body>
+</html>
