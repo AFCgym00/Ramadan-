@@ -16,24 +16,27 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         body { 
-            font-family: 'Poppins', sans-serif; background-color: var(--dark); 
-            color: #fff; margin: 0; padding: 10px; display: flex; justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: var(--dark); 
+            color: #fff; margin: 0; padding: 10px; 
+            display: flex; justify-content: center;
         }
 
         .app-container { 
-            width: 100%; max-width: 450px; background: var(--deep-green); 
-            border: 1px solid var(--gold); border-radius: 35px; padding: 25px; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.8); min-height: 90vh;
+            width: 100%; max-width: 450px; 
+            background: var(--deep-green); 
+            border: 1.5px solid var(--gold); 
+            border-radius: 35px; padding: 25px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8); 
+            min-height: 90vh;
             position: relative;
         }
 
-        /* Branding Header */
         .header { text-align: center; margin-bottom: 25px; }
-        .badge { background: var(--gold); color: #000; padding: 3px 12px; border-radius: 20px; font-size: 10px; font-weight: 800; text-transform: uppercase; }
-        .header h1 { margin: 10px 0 0 0; font-size: 24px; letter-spacing: 2px; color: var(--gold); }
-        .header p { font-size: 11px; color: #666; margin: 5px 0; }
+        .badge { background: var(--gold); color: #000; padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 800; text-transform: uppercase; }
+        .header h1 { margin: 10px 0 0 0; font-size: 26px; letter-spacing: 2px; color: var(--gold); }
+        .header p { font-size: 11px; color: #888; margin: 5px 0; letter-spacing: 1px; }
 
-        /* Input Controls */
         .inputs { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
         input { 
             background: #111; border: 1px solid #333; color: white; padding: 15px; 
@@ -41,32 +44,29 @@
         }
         input:focus { border-color: var(--gold); }
 
-        /* Goal Toggle */
         .toggle-row { display: flex; background: #000; padding: 5px; border-radius: 15px; margin-bottom: 20px; }
         .t-btn { flex: 1; padding: 12px; border: none; border-radius: 10px; background: none; color: #555; font-weight: bold; cursor: pointer; }
         .t-btn.active { background: var(--gold); color: #000; }
 
-        /* Plan Section */
         #resultsView { display: none; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .stat-card { background: rgba(212, 175, 55, 0.1); border: 1px solid var(--gold); padding: 12px; border-radius: 15px; text-align: center; margin-bottom: 15px; }
-        .meal-box { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 15px; margin-bottom: 12px; border-left: 4px solid var(--gold); }
-        .meal-box h3 { margin: 0 0 5px 0; font-size: 16px; color: var(--gold); display: flex; justify-content: space-between; }
-        .meal-box p { margin: 0; font-size: 14px; color: #bbb; line-height: 1.5; }
+        .meal-box { background: rgba(255,255,255,0.03); padding: 18px; border-radius: 18px; margin-bottom: 15px; border-left: 4px solid var(--gold); }
+        .meal-box h3 { margin: 0 0 8px 0; font-size: 16px; color: var(--gold); display: flex; justify-content: space-between; align-items: center; }
+        .meal-box p { margin: 0; font-size: 14px; color: #ccc; line-height: 1.6; }
 
-        /* Footer Dua */
         .dua-section { text-align: center; border-top: 1px solid #222; margin-top: 25px; padding-top: 15px; }
-        .dua-arabic { font-size: 12px; color: #888; font-style: italic; }
-        .dua-hin { font-size: 11px; color: var(--gold); margin-top: 5px; display: block; }
-        .gym-time { font-size: 11px; font-weight: bold; color: var(--accent-green); margin-top: 10px; display: block; }
+        .dua-arabic { font-size: 13px; color: #888; font-style: italic; display: block; }
+        .dua-hin { font-size: 12px; color: var(--gold); margin-top: 8px; display: block; }
+        .gym-time { font-size: 12px; font-weight: bold; color: var(--accent-green); margin-top: 15px; display: block; }
 
-        /* Floating PDF Action */
+        /* Small Floating Action Button */
         .pdf-fab { 
             position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; 
             background: var(--accent-green); border-radius: 50%; border: none; 
             display: none; align-items: center; justify-content: center; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5); z-index: 999;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5); z-index: 999; cursor: pointer;
         }
     </style>
 </head>
@@ -81,7 +81,7 @@
 
     <div class="inputs">
         <input type="text" id="memName" placeholder="Member Name">
-        <input type="number" id="memWeight" placeholder="Weight (kg) to unlock diet" oninput="generatePlan()">
+        <input type="number" id="memWeight" placeholder="Weight (kg) likhein" oninput="generatePlan()">
     </div>
 
     <div class="toggle-row">
@@ -95,17 +95,17 @@
         </div>
 
         <div class="meal-box">
-            <h3>🌙 SAHUR <span>(Pre-Dawn)</span></h3>
+            <h3>🌙 SAHUR <small style="font-size:10px; color:#666;">Pre-Dawn</small></h3>
             <p id="sahurHtml"></p>
         </div>
 
         <div class="meal-box">
-            <h3>🕌 IFTARI <span>(Fast Break)</span></h3>
+            <h3>🕌 IFTARI <small style="font-size:10px; color:#666;">Fast Break</small></h3>
             <p id="iftarHtml"></p>
         </div>
 
-        <div class="meal-box">
-            <h3>🍽️ DINNER <span>(Main Meal)</span></h3>
+        <div class="meal-box" style="border-left-color: var(--accent-green);">
+            <h3>🍽️ DINNER <small style="font-size:10px; color:#666;">Main Recovery</small></h3>
             <p id="dinnerHtml"></p>
         </div>
 
@@ -118,7 +118,7 @@
 </div>
 
 <button class="pdf-fab" id="pdfBtn" onclick="downloadPDF()">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
 </button>
 
 <script>
@@ -132,7 +132,6 @@
     }
 
     function generatePlan() {
-        const name = document.getElementById('memName').value || "Warrior";
         const weight = document.getElementById('memWeight').value;
         const view = document.getElementById('resultsView');
         const fab = document.getElementById('pdfBtn');
@@ -160,19 +159,42 @@
 
     async function downloadPDF() {
         const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        const name = document.getElementById('memName').value || "Athlete";
+        const doc = new jsPDF('p', 'mm', 'a4');
+        const name = document.getElementById('memName').value || "Warrior";
         const w = document.getElementById('memWeight').value;
+        const protein = (w * 2.2).toFixed(0);
 
-        doc.setFillColor(5, 20, 15); doc.rect(0, 0, 210, 297, 'F');
+        // Styling PDF
+        doc.setFillColor(4, 22, 15); doc.rect(0, 0, 210, 297, 'F');
         doc.setTextColor(212, 175, 55); doc.setFontSize(22);
-        doc.text("AZHAR FITNESS - RAMADAN SPECIALIST", 105, 30, { align: "center" });
+        doc.text("AZHAR FITNESS CENTER", 105, 30, { align: "center" });
+        doc.setFontSize(12);
+        doc.text("RAMADAN SPECIALIST DIET PLAN", 105, 38, { align: "center" });
+
         doc.setTextColor(255, 255, 255); doc.setFontSize(14);
-        doc.text(`Diet Plan for: ${name} (${w}kg)`, 20, 50);
-        doc.line(20, 55, 190, 55);
+        doc.text(`Athlete: ${name}`, 20, 60);
+        doc.text(`Weight: ${w}kg | Protein Target: ${protein}g`, 20, 68);
+        doc.setDrawColor(212, 175, 55); doc.line(20, 72, 190, 72);
+
+        doc.setTextColor(212, 175, 55); doc.text("SAHUR:", 20, 85);
+        doc.setTextColor(255, 255, 255); doc.setFontSize(11);
+        doc.text(doc.splitTextToSize(document.getElementById('sahurHtml').innerText.replace(/<br>/g, ', '), 160), 25, 93);
+
+        doc.setTextColor(212, 175, 55); doc.setFontSize(14); doc.text("IFTARI:", 20, 115);
+        doc.setTextColor(255, 255, 255); doc.setFontSize(11);
+        doc.text(doc.splitTextToSize(document.getElementById('iftarHtml').innerText.replace(/<br>/g, ', '), 160), 25, 123);
+
+        doc.setTextColor(212, 175, 55); doc.setFontSize(14); doc.text("DINNER:", 20, 145);
+        doc.setTextColor(255, 255, 255); doc.setFontSize(11);
+        doc.text(doc.splitTextToSize(document.getElementById('dinnerHtml').innerText.replace(/<br>/g, ', '), 160), 25, 153);
+
+        doc.setFontSize(10); doc.setTextColor(100, 100, 100);
+        doc.text("GYM TIMINGS: 07:00 PM - 01:00 AM | Mumbra, Thane", 105, 280, { align: "center" });
+
         doc.save(`AFC_Ramadan_${name}.pdf`);
     }
 </script>
 
 </body>
 </html>
+
