@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AFC | Ramadan Specialist Elite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Poppins:wght@300;400;600;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         :root { 
@@ -27,28 +28,31 @@
         .badge { background: var(--gold); color: #000; padding: 3px 12px; border-radius: 50px; font-size: 10px; font-weight: 800; text-transform: uppercase; }
         .header h1 { font-size: 26px; color: var(--gold); margin: 5px 0; font-weight: 900; letter-spacing: 2px; }
 
+        /* Dua Card Styling */
+        .dua-card {
+            background: rgba(0,0,0,0.4); border: 1px solid var(--gold);
+            padding: 15px; border-radius: 20px; margin-bottom: 20px; text-align: center;
+        }
+        .arabic { font-family: 'Amiri', serif; font-size: 22px; color: var(--gold); direction: rtl; line-height: 1.6; margin-bottom: 10px; }
+        .transliteration { font-size: 11px; color: #ffd369; margin-bottom: 8px; font-style: italic; }
+        .meaning { font-size: 10px; color: #e0e0e0; border-top: 1px solid rgba(212,175,55,0.2); padding-top: 8px; }
+
         input { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid #333; color: white; padding: 15px; border-radius: 15px; font-size: 16px; margin-bottom: 12px; outline: none; }
-        
         .toggle-row { display: flex; background: #000; padding: 5px; border-radius: 15px; margin-bottom: 20px; }
         .t-btn { flex: 1; padding: 12px; border: none; border-radius: 12px; background: none; color: #555; font-weight: bold; cursor: pointer; }
         .t-btn.active { background: var(--gold); color: #000; box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3); }
 
         #resultsView { display: none; }
         .prot-card { background: rgba(212, 175, 55, 0.15); border: 1px solid var(--gold); padding: 15px; border-radius: 18px; text-align: center; margin-bottom: 20px; color: var(--gold); font-weight: 900; }
-        
         .meal-box { background: rgba(255,255,255,0.03); padding: 18px; border-radius: 20px; margin-bottom: 12px; border-left: 5px solid var(--gold); }
-        .meal-box h3 { margin: 0 0 5px 0; font-size: 16px; color: var(--gold); }
-        .meal-box p { margin: 0; font-size: 13px; color: #ccc; line-height: 1.5; }
-
-        .macro-table { width: 100%; margin-top: 20px; border-collapse: collapse; font-size: 12px; border: 1px solid rgba(212,175,55,0.3); border-radius: 10px; overflow: hidden; }
-        .macro-table th { background: var(--gold); color: #000; padding: 10px; }
-        .macro-table td { padding: 10px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(0,0,0,0.2); }
+        .macro-table { width: 100%; margin-top: 20px; border-collapse: collapse; font-size: 12px; border: 1px solid rgba(212,175,55,0.3); text-align: center; }
+        .macro-table th { background: var(--gold); color: #000; padding: 8px; }
+        .macro-table td { padding: 8px; background: rgba(0,0,0,0.2); border-bottom: 1px solid rgba(255,255,255,0.05); }
 
         .footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(212,175,55,0.2); text-align: center; }
-        .footer-logo { font-size: 18px; font-weight: 900; color: var(--gold); letter-spacing: 2px; }
         .timing { color: var(--accent-green); font-weight: bold; font-size: 12px; display: block; margin: 8px 0; }
 
-        .pdf-fab { position: fixed; bottom: 30px; right: 25px; width: 65px; height: 65px; background: var(--accent-green); border-radius: 50%; border: none; display: none; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0,0,0,0.5); cursor: pointer; z-index: 1000; }
+        .pdf-fab { position: fixed; bottom: 30px; right: 25px; width: 65px; height: 65px; background: var(--accent-green); border-radius: 50%; border: none; display: none; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0,0,0,0.5); z-index: 1000; }
     </style>
 </head>
 <body>
@@ -57,7 +61,22 @@
     <div class="header">
         <span class="badge">Elite Specialist</span>
         <h1>AZHAR FITNESS</h1>
-        <p>HOME FOOD DIET SYSTEM</p>
+        <p style="font-size: 10px; color: #888;">RAMADAN SPECIALIST SYSTEM</p>
+    </div>
+
+    <div class="dua-card">
+        <h2 style="font-size: 14px; color: var(--gold); margin-top: 0;">🌙 Iftar Ki Dua</h2>
+        <div class="arabic">
+            اللَّهُمَّ إِنِّي لَكَ صُمْتُ وَبِكَ آمَنْتُ وَعَلَىٰ رِزْقِكَ أَفْطَرْتُ <br>
+            ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوقُ
+        </div>
+        <div class="transliteration">
+            Allahumma inni laka sumtu wa bika aamantu wa ‘ala rizqika aftartu. <br>
+            Zahabaz-zama’u wabtallatil-‘urooq...
+        </div>
+        <div class="meaning">
+            Ya Allah, maine Tere liye roza rakha, Tujh par imaan laya, aur Tere diye hue rizq se iftar kiya. Pyaas khatam ho gayi, ragain tar ho gayi.
+        </div>
     </div>
 
     <input type="text" id="mName" placeholder="Full Member Name">
@@ -70,7 +89,6 @@
 
     <div id="resultsView">
         <div class="prot-card" id="protDisplay"></div>
-
         <div class="meal-box"><h3>🌙 SAHUR</h3><p id="sahurTxt"></p></div>
         <div class="meal-box"><h3>🕌 IFTARI</h3><p id="iftarTxt"></p></div>
         <div class="meal-box" style="border-left-color: var(--accent-green);"><h3>🍽️ DINNER (POST-GYM)</h3><p id="dinnerTxt"></p></div>
@@ -85,9 +103,9 @@
         </table>
 
         <div class="footer">
-            <div class="footer-logo">AZHAR FITNESS</div>
+            <div style="font-weight: 900; color: var(--gold);">AZHAR FITNESS CENTER</div>
             <span class="timing">GYM TIMINGS: 07:00 PM – 01:00 AM</span>
-            <p style="font-size: 9px; color: #333; margin-top: 10px;">© 2026 AzharFitPro Elite Nutrition</p>
+            <p style="font-size: 9px; color: #333;">© 2026 AzharFitPro Elite Nutrition</p>
         </div>
     </div>
 </div>
@@ -152,41 +170,29 @@
         const doc = new jsPDF();
         const n = document.getElementById('mName').value || "Athlete";
         const w = document.getElementById('mWeight').value;
-        const p = (w * 2.2).toFixed(0);
-
+        
         doc.setFillColor(4, 22, 15); doc.rect(0, 0, 210, 45, 'F');
         doc.setTextColor(212, 175, 55); doc.setFontSize(22); doc.text("AZHAR FITNESS CENTER", 105, 25, { align: "center" });
-        doc.setFontSize(10); doc.text("RAMADAN ELITE SPECIALIST SYSTEM", 105, 35, { align: "center" });
-
-        doc.setTextColor(0, 0, 0); doc.setFontSize(11);
+        
+        doc.setTextColor(0,0,0); doc.setFontSize(12);
         doc.text(`Athlete: ${n} | Weight: ${w}kg | Goal: ${currentGoal.toUpperCase()}`, 20, 55);
-        doc.text(`PROTEIN LOCK: ${p}g Daily`, 20, 62);
-
-        doc.setDrawColor(212, 175, 55); doc.rect(15, 70, 180, 65);
-        doc.setTextColor(184, 134, 11); doc.setFontSize(13); doc.text("MASNOON DUAS & BARKAT", 105, 80, { align: "center" });
         
+        doc.setDrawColor(212, 175, 55); doc.rect(15, 65, 180, 55);
+        doc.setTextColor(184, 134, 11); doc.setFontSize(13); doc.text("IFTAR KI MASNOON DUA", 105, 75, { align: "center" });
         doc.setFontSize(9); doc.setTextColor(0, 0, 0);
-        doc.setFont("helvetica", "bold"); doc.text("Sehri Dua:", 20, 90);
-        doc.setFont("helvetica", "italic"); doc.text("'Wa bi-sawmi ghadinn nawaiytu min shahri ramadan'", 45, 90);
-        doc.setFont("helvetica", "normal"); doc.text("Tarjuma: Maine Ramadan ke kal ke roze ki niyyat ki.", 45, 94);
-        
-        doc.setFont("helvetica", "bold"); doc.text("Iftar Dua:", 20, 104);
-        doc.setFont("helvetica", "italic"); doc.text("'Dhahaba al-zama’u wa-btallat al-‘uruqu wa thabata al-ajru in sha Allah'", 45, 104);
-        doc.setFont("helvetica", "normal"); doc.text("Tarjuma: Pyaas chali gayi, ragein tar ho gayin aur sawab pakka ho gaya, In Sha Allah.", 45, 108);
+        doc.text("Allahumma inni laka sumtu wa bika aamantu wa 'ala rizqika aftartu.", 20, 85);
+        doc.text("Tarjuma: Ya Allah, maine Tere liye roza rakha aur Tere diye rizq se iftar kiya.", 20, 92);
+        doc.text("Zahabaz-zama’u wabtallatil-‘urooq wa thabatal-ajru in sha Allah.", 20, 102);
+        doc.text("Tarjuma: Pyaas khatam hui, ragain tar hui aur ajar sabit hua, In Sha Allah.", 20, 109);
 
-        doc.setFont("helvetica", "bold"); doc.text("Surah Al-Qadr (Tarjuma):", 20, 118);
-        doc.setFont("helvetica", "normal");
-        const qadrText = "Beshak Humne ise Shab-e-Qadr mein nazil kiya. Shab-e-Qadr hazaar mahino se behtar hai.";
-        doc.text(doc.splitTextToSize(qadrText, 145), 45, 118);
-
-        doc.setTextColor(212, 175, 55); doc.setFontSize(14); doc.text("DIET SCHEDULE", 20, 150);
+        doc.setFontSize(14); doc.setTextColor(212, 175, 55); doc.text("DIET SCHEDULE", 20, 140);
         doc.setFontSize(10); doc.setTextColor(0, 0, 0);
-        doc.text(`SAHUR: ${document.getElementById('sahurTxt').innerText}`, 20, 160);
-        doc.text(`IFTARI: ${document.getElementById('iftarTxt').innerText}`, 20, 170);
-        doc.text(`DINNER: ${document.getElementById('dinnerTxt').innerText}`, 20, 180);
+        doc.text(`SAHUR: ${document.getElementById('sahurTxt').innerText}`, 20, 150);
+        doc.text(`IFTARI: ${document.getElementById('iftarTxt').innerText}`, 20, 160);
+        doc.text(`DINNER: ${document.getElementById('dinnerTxt').innerText}`, 20, 170);
 
         doc.setTextColor(39, 174, 96); doc.text("GYM TIMINGS: 07:00 PM - 01:00 AM", 105, 230, { align: "center" });
-        doc.save(`AFC_Elite_${n}.pdf`);
+        doc.save(`AFC_Elite_Plan_${n}.pdf`);
     }
 </script>
 </body>
