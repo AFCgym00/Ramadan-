@@ -3,204 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AFC | Ramadan Specialist Diet System</title>
+    <title>AFC | Ramadan Specialist</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
-        :root { 
-            --gold: #d4af37; 
-            --dark: #000000; 
-            --deep-green: #04160f;
-            --accent-green: #27ae60;
-        }
-
+        :root { --gold: #d4af37; --dark: #000; --deep-green: #04160f; --accent-green: #27ae60; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background-color: var(--dark); 
-            color: #fff; margin: 0; padding: 10px; 
-            display: flex; justify-content: center;
-        }
-
-        .app-container { 
-            width: 100%; max-width: 450px; 
-            background: var(--deep-green); 
-            border: 1.5px solid var(--gold); 
-            border-radius: 35px; padding: 25px; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.8); 
-            min-height: 90vh;
-            position: relative;
-        }
-
-        .header { text-align: center; margin-bottom: 25px; }
-        .badge { background: var(--gold); color: #000; padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 800; text-transform: uppercase; }
-        .header h1 { margin: 10px 0 0 0; font-size: 26px; letter-spacing: 2px; color: var(--gold); }
-        .header p { font-size: 11px; color: #888; margin: 5px 0; letter-spacing: 1px; }
-
-        .inputs { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
-        input { 
-            background: #111; border: 1px solid #333; color: white; padding: 15px; 
-            border-radius: 12px; font-size: 16px; outline: none; transition: 0.3s;
-        }
-        input:focus { border-color: var(--gold); }
-
-        .toggle-row { display: flex; background: #000; padding: 5px; border-radius: 15px; margin-bottom: 20px; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--dark); color: #fff; margin: 0; padding: 10px; display: flex; justify-content: center; }
+        .app-shell { width: 100%; max-width: 420px; background: var(--deep-green); border-radius: 35px; padding: 25px; border: 1.5px solid var(--gold); min-height: 95vh; position: relative; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .badge { background: var(--gold); color: #000; padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 800; }
+        input { width: 100%; background: #111; border: 1px solid #333; color: white; padding: 15px; border-radius: 12px; font-size: 16px; margin-bottom: 10px; outline: none; }
+        .toggle-row { display: flex; background: #000; padding: 4px; border-radius: 12px; margin-bottom: 20px; }
         .t-btn { flex: 1; padding: 12px; border: none; border-radius: 10px; background: none; color: #555; font-weight: bold; cursor: pointer; }
         .t-btn.active { background: var(--gold); color: #000; }
-
-        #resultsView { display: none; animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .stat-card { background: rgba(212, 175, 55, 0.1); border: 1px solid var(--gold); padding: 12px; border-radius: 15px; text-align: center; margin-bottom: 15px; }
-        .meal-box { background: rgba(255,255,255,0.03); padding: 18px; border-radius: 18px; margin-bottom: 15px; border-left: 4px solid var(--gold); }
-        .meal-box h3 { margin: 0 0 8px 0; font-size: 16px; color: var(--gold); display: flex; justify-content: space-between; align-items: center; }
-        .meal-box p { margin: 0; font-size: 14px; color: #ccc; line-height: 1.6; }
-
-        .dua-section { text-align: center; border-top: 1px solid #222; margin-top: 25px; padding-top: 15px; }
-        .dua-arabic { font-size: 13px; color: #888; font-style: italic; display: block; }
-        .dua-hin { font-size: 12px; color: var(--gold); margin-top: 8px; display: block; }
-        .gym-time { font-size: 12px; font-weight: bold; color: var(--accent-green); margin-top: 15px; display: block; }
-
-        /* Small Floating Action Button */
-        .pdf-fab { 
-            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; 
-            background: var(--accent-green); border-radius: 50%; border: none; 
-            display: none; align-items: center; justify-content: center; 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5); z-index: 999; cursor: pointer;
-        }
+        #resultsView { display: none; }
+        .prot-card { background: rgba(212,175,55,0.1); border: 1px solid var(--gold); padding: 12px; border-radius: 15px; text-align: center; margin-bottom: 15px; color: var(--gold); font-weight: bold; }
+        .meal-box { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 15px; margin-bottom: 12px; border-left: 4px solid var(--gold); }
+        .meal-box h3 { margin: 0 0 5px 0; font-size: 16px; color: var(--gold); display: flex; justify-content: space-between; }
+        .meal-box p { margin: 0; font-size: 13px; color: #ccc; line-height: 1.5; }
+        .micros { font-size: 11px; color: var(--gold); display: block; margin-top: 5px; opacity: 0.8; }
+        .footer-dua { text-align: center; border-top: 1px solid #222; margin-top: 20px; padding-top: 10px; font-size: 12px; color: #888; }
+        .pdf-fab { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--accent-green); border-radius: 50%; border: none; display: none; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0,0,0,0.5); cursor: pointer; }
     </style>
 </head>
 <body>
 
-<div class="app-container">
+<div class="app-shell">
     <div class="header">
         <span class="badge">Ramadan Specialist</span>
-        <h1>AZHAR FITNESS</h1>
-        <p>HOME FOOD DIET SYSTEM</p>
+        <h1 style="color:var(--gold); margin:5px 0;">AZHAR FITNESS</h1>
+        <p style="font-size:10px; color:#666;">HOME FOOD DIET SYSTEM</p>
     </div>
 
-    <div class="inputs">
-        <input type="text" id="memName" placeholder="Member Name">
-        <input type="number" id="memWeight" placeholder="Weight (kg) likhein" oninput="generatePlan()">
-    </div>
+    <input type="text" id="mName" placeholder="Member Name">
+    <input type="number" id="mWeight" placeholder="Weight (kg)" oninput="updateDiet()">
 
     <div class="toggle-row">
-        <button id="loss" class="t-btn active" onclick="setGoal('loss')">FAT LOSS</button>
-        <button id="gain" class="t-btn" onclick="setGoal('gain')">WEIGHT GAIN</button>
+        <button id="lBtn" class="t-btn active" onclick="setGoal('loss')">FAT LOSS</button>
+        <button id="gBtn" class="t-btn" onclick="setGoal('gain')">WEIGHT GAIN</button>
     </div>
 
     <div id="resultsView">
-        <div class="stat-card">
-            <span id="protSummary" style="font-weight: bold; color: var(--gold);"></span>
+        <div class="prot-card" id="protDisplay"></div>
+
+        <div class="meal-box">
+            <h3>🌙 SAHUR <small style="font-size:10px; color:#555;">Pre-Dawn</small></h3>
+            <p id="sahurTxt"></p>
+            <span class="micros" id="sahurMicros"></span>
         </div>
 
         <div class="meal-box">
-            <h3>🌙 SAHUR <small style="font-size:10px; color:#666;">Pre-Dawn</small></h3>
-            <p id="sahurHtml"></p>
+            <h3>🕌 IFTARI <small style="font-size:10px; color:#555;">Fast Break</small></h3>
+            <p id="iftarTxt"></p>
+            <span class="micros" id="iftarMicros"></span>
         </div>
 
-        <div class="meal-box">
-            <h3>🕌 IFTARI <small style="font-size:10px; color:#666;">Fast Break</small></h3>
-            <p id="iftarHtml"></p>
+        <div class="meal-box" style="border-left-color:var(--accent-green);">
+            <h3>🍽️ DINNER <small style="font-size:10px; color:#555;">Recovery</small></h3>
+            <p id="dinnerTxt"></p>
+            <span class="micros" id="dinnerMicros"></span>
         </div>
 
-        <div class="meal-box" style="border-left-color: var(--accent-green);">
-            <h3>🍽️ DINNER <small style="font-size:10px; color:#666;">Main Recovery</small></h3>
-            <p id="dinnerHtml"></p>
-        </div>
-
-        <div class="dua-section">
-            <span class="dua-arabic">"Allahumma laka sumtu wa 'ala rizqika aftartu"</span>
-            <span class="dua-hin">Ya Allah, Maine tere liye Roza rakha aur tere diye rizq se Iftar kiya.</span>
-            <span class="gym-time">GYM TIMINGS: 07:00 PM – 01:00 AM</span>
+        <div class="footer-dua">
+            <i>"Allahumma laka sumtu wa 'ala rizqika aftartu"</i><br>
+            <span style="color:var(--gold); font-size:11px;">GYM: 07:00 PM – 01:00 AM</span>
         </div>
     </div>
 </div>
 
-<button class="pdf-fab" id="pdfBtn" onclick="downloadPDF()">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+<button class="pdf-fab" id="pdfBtn" onclick="makePDF()">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
 </button>
 
 <script>
-        if (currentGoal === 'loss') {
-        document.getElementById('sahurHtml').innerHTML = "<b>Diet:</b> 5-6 Egg Whites + 1 Bowl Dahi + 1 Jowar Roti.<br><b>Micros:</b> Selenium, B12, & Probiotics (for Gut Health).";
-        document.getElementById('iftarHtml').innerHTML = "<b>Diet:</b> 2 Dates + Nimbu Pani + Bhuna Chana.<br><b>Micros:</b> Iron, Zinc, & Electrolytes (for Hydration).";
-        document.getElementById('dinnerHtml').innerHTML = "<b>Diet:</b> 200g Chicken/Paneer + Green Salad.<br><b>Micros:</b> B6, Folate, & Calcium (for Recovery).";
-    }
-
-    let currentGoal = 'loss';
+    let goal = 'loss';
 
     function setGoal(g) {
-        currentGoal = g;
-        document.getElementById('loss').className = g === 'loss' ? 't-btn active' : 't-btn';
-        document.getElementById('gain').className = g === 'gain' ? 't-btn active' : 't-btn';
-        generatePlan();
+        goal = g;
+        document.getElementById('lBtn').classList.toggle('active', g === 'loss');
+        document.getElementById('gBtn').classList.toggle('active', g === 'gain');
+        updateDiet();
     }
 
-    function generatePlan() {
-        const weight = document.getElementById('memWeight').value;
-        const view = document.getElementById('resultsView');
+    function updateDiet() {
+        const w = document.getElementById('mWeight').value;
+        const res = document.getElementById('resultsView');
         const fab = document.getElementById('pdfBtn');
 
-        if (weight > 30) {
-            view.style.display = 'block';
+        if (w > 30) {
+            res.style.display = 'block';
             fab.style.display = 'flex';
-            const protein = (weight * 2.2).toFixed(0);
-            document.getElementById('protSummary').innerText = `LOCKED: ${protein}G PROTEIN / DAY`;
+            const protein = (w * 2.2).toFixed(0);
+            document.getElementById('protDisplay').innerText = `LOCKED: ${protein}G PROTEIN / DAY`;
 
-            if (currentGoal === 'loss') {
-                document.getElementById('sahurHtml').innerHTML = "• 5-6 Egg Whites (Uble hue)<br>• 1 Jowar Roti + 1 Bowl Dahi<br>• 1 Apple + 1L Pani.";
-                document.getElementById('iftarHtml').innerHTML = "• 2 Dates + Nimbu Pani<br>• 1 Bowl Bhuna Chana + Watermelon.<br>• ❌ Avoid Oil/Sugar.";
-                document.getElementById('dinnerHtml').innerHTML = "• 200g Home-style Chicken or Paneer<br>• Full Bowl Green Salad.<br>• No Rice/Roti at night.";
+            if (goal === 'loss') {
+                document.getElementById('sahurTxt').innerText = "5-6 Egg Whites + 1 Bowl Dahi + 1 Jowar Roti + 1 Apple.";
+                document.getElementById('sahurMicros').innerText = "Micros: B12, Probiotics, & Magnesium.";
+                document.getElementById('iftarTxt').innerText = "2 Dates + Nimbu Pani + 1 Bowl Bhuna Chana + Watermelon.";
+                document.getElementById('iftarMicros').innerText = "Micros: Iron, Zinc, & Electrolytes.";
+                document.getElementById('dinnerTxt').innerText = "200g Home Chicken or Paneer + Large Green Salad. No Rice.";
+                document.getElementById('dinnerMicros').innerText = "Micros: B6, Folate, & Calcium.";
             } else {
-                document.getElementById('sahurHtml').innerHTML = "• 3 Whole Eggs + 1 Bowl Dahi<br>• 2 Parathe + 1 Glass Doodh<br>• 1 Banana + 10 Almonds.";
-                document.getElementById('iftarHtml').innerHTML = "• 3 Dates + 1 Glass Milkshake<br>• 1 Bowl Fruit Salad + Chana Chaat.";
-                document.getElementById('dinnerHtml').innerHTML = "• Chicken or Paneer Curry<br>• 2 Bowls Rice + 1 Bowl Dal.";
+                document.getElementById('sahurTxt').innerText = "3 Whole Eggs + 2 Parathe + 1 Bowl Dahi + 1 Banana.";
+                document.getElementById('sahurMicros').innerText = "Micros: Healthy Fats, Vitamin D, & Potassium.";
+                document.getElementById('iftarTxt').innerText = "3 Dates + 1 Glass Milkshake + Fruit Salad + Chana Chaat.";
+                document.getElementById('iftarMicros').innerText = "Micros: Vitamin C, Calcium, & Manganese.";
+                document.getElementById('dinnerTxt').innerText = "250g Chicken/Paneer Curry + 2 Bowls Rice + 1 Bowl Dal.";
+                document.getElementById('dinnerMicros').innerText = "Micros: Complex Carbs, B-Complex, & Phosphorus.";
             }
         } else {
-            view.style.display = 'none';
+            res.style.display = 'none';
             fab.style.display = 'none';
         }
     }
 
-    async function downloadPDF() {
+    async function makePDF() {
         const { jsPDF } = window.jspdf;
-        const doc = new jsPDF('p', 'mm', 'a4');
-        const name = document.getElementById('memName').value || "Warrior";
-        const w = document.getElementById('memWeight').value;
-        const protein = (w * 2.2).toFixed(0);
-
-        // Styling PDF
+        const doc = new jsPDF();
+        const n = document.getElementById('mName').value || "Athlete";
+        const w = document.getElementById('mWeight').value;
+        
         doc.setFillColor(4, 22, 15); doc.rect(0, 0, 210, 297, 'F');
         doc.setTextColor(212, 175, 55); doc.setFontSize(22);
-        doc.text("AZHAR FITNESS CENTER", 105, 30, { align: "center" });
-        doc.setFontSize(12);
-        doc.text("RAMADAN SPECIALIST DIET PLAN", 105, 38, { align: "center" });
-
+        doc.text("AZHAR FITNESS - RAMADAN PLAN", 105, 30, { align: "center" });
+        
         doc.setTextColor(255, 255, 255); doc.setFontSize(14);
-        doc.text(`Athlete: ${name}`, 20, 60);
-        doc.text(`Weight: ${w}kg | Protein Target: ${protein}g`, 20, 68);
-        doc.setDrawColor(212, 175, 55); doc.line(20, 72, 190, 72);
-
-        doc.setTextColor(212, 175, 55); doc.text("SAHUR:", 20, 85);
+        doc.text(`Name: ${n} | Weight: ${w}kg`, 20, 50);
+        doc.text(`Protein Lock: ${(w * 2.2).toFixed(0)}g`, 20, 60);
+        
+        doc.setTextColor(212, 175, 55); doc.text("SAHUR:", 20, 80);
         doc.setTextColor(255, 255, 255); doc.setFontSize(11);
-        doc.text(doc.splitTextToSize(document.getElementById('sahurHtml').innerText.replace(/<br>/g, ', '), 160), 25, 93);
+        doc.text(doc.splitTextToSize(document.getElementById('sahurTxt').innerText, 160), 25, 90);
 
         doc.setTextColor(212, 175, 55); doc.setFontSize(14); doc.text("IFTARI:", 20, 115);
         doc.setTextColor(255, 255, 255); doc.setFontSize(11);
-        doc.text(doc.splitTextToSize(document.getElementById('iftarHtml').innerText.replace(/<br>/g, ', '), 160), 25, 123);
+        doc.text(doc.splitTextToSize(document.getElementById('iftarTxt').innerText, 160), 25, 125);
 
-        doc.setTextColor(212, 175, 55); doc.setFontSize(14); doc.text("DINNER:", 20, 145);
+        doc.setTextColor(212, 175, 55); doc.setFontSize(14); doc.text("DINNER:", 20, 150);
         doc.setTextColor(255, 255, 255); doc.setFontSize(11);
-        doc.text(doc.splitTextToSize(document.getElementById('dinnerHtml').innerText.replace(/<br>/g, ', '), 160), 25, 153);
+        doc.text(doc.splitTextToSize(document.getElementById('dinnerTxt').innerText, 160), 25, 160);
 
-        doc.setFontSize(10); doc.setTextColor(100, 100, 100);
-        doc.text("GYM TIMINGS: 07:00 PM - 01:00 AM | Mumbra, Thane", 105, 280, { align: "center" });
-
-        doc.save(`AFC_Ramadan_${name}.pdf`);
+        doc.save(`AFC_${n}_Diet.pdf`);
     }
 </script>
-
 </body>
 </html>
-
