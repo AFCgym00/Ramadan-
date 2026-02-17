@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <title>AFC | Ramadan Specialist</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
@@ -10,19 +11,26 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--dark); color: #fff; margin: 0; padding: 10px; display: flex; justify-content: center; }
         .app-shell { width: 100%; max-width: 420px; background: var(--deep-green); border-radius: 35px; padding: 25px; border: 1.5px solid var(--gold); min-height: 95vh; position: relative; }
+        
         .header { text-align: center; margin-bottom: 20px; }
         .badge { background: var(--gold); color: #000; padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 800; }
-        input { width: 100%; background: #111; border: 1px solid #333; color: white; padding: 15px; border-radius: 12px; font-size: 16px; margin-bottom: 10px; outline: none; }
+        
+        .ashra-box { background: rgba(255,255,255,0.03); border: 0.5px solid var(--gold); border-radius: 15px; padding: 12px; margin-bottom: 15px; font-size: 11px; }
+        .ashra-title { color: var(--gold); font-weight: bold; text-transform: uppercase; margin-bottom: 5px; display: block; border-bottom: 1px solid rgba(212,175,55,0.2); padding-bottom: 3px; }
+
+        .input-group input { width: 100%; background: #111; border: 1px solid #333; color: white; padding: 15px; border-radius: 12px; font-size: 16px; margin-bottom: 10px; outline: none; }
         .toggle-row { display: flex; background: #000; padding: 4px; border-radius: 12px; margin-bottom: 20px; }
         .t-btn { flex: 1; padding: 12px; border: none; border-radius: 10px; background: none; color: #555; font-weight: bold; cursor: pointer; }
         .t-btn.active { background: var(--gold); color: #000; }
+        
         #resultsView { display: none; }
         .prot-card { background: rgba(212,175,55,0.1); border: 1px solid var(--gold); padding: 12px; border-radius: 15px; text-align: center; margin-bottom: 15px; color: var(--gold); font-weight: bold; }
         .meal-box { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 15px; margin-bottom: 12px; border-left: 4px solid var(--gold); }
         .meal-box h3 { margin: 0 0 5px 0; font-size: 16px; color: var(--gold); display: flex; justify-content: space-between; }
         .meal-box p { margin: 0; font-size: 13px; color: #ccc; line-height: 1.5; }
-        .micros { font-size: 11px; color: var(--gold); display: block; margin-top: 5px; opacity: 0.8; }
-        .footer-dua { text-align: center; border-top: 1px solid #222; margin-top: 20px; padding-top: 10px; font-size: 12px; color: #888; }
+        
+        .whatsapp-btn { background: #25D366; color: #fff; width: 100%; padding: 15px; border: none; border-radius: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 15px; cursor: pointer; text-decoration: none; }
+        .footer-dua { text-align: center; border-top: 1px solid #222; margin-top: 20px; padding-top: 10px; font-size: 11px; color: #888; }
         .pdf-fab { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--accent-green); border-radius: 50%; border: none; display: none; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0,0,0,0.5); cursor: pointer; }
     </style>
 </head>
@@ -32,11 +40,19 @@
     <div class="header">
         <span class="badge">Ramadan Specialist</span>
         <h1 style="color:var(--gold); margin:5px 0;">AZHAR FITNESS</h1>
-        <p style="font-size:10px; color:#666;">HOME FOOD DIET SYSTEM</p>
+        <p style="font-size:10px; color:#666;">DIET & WHATSAPP CONNECT</p>
     </div>
 
-    <input type="text" id="mName" placeholder="Member Name">
-    <input type="number" id="mWeight" placeholder="Weight (kg)" oninput="updateDiet()">
+    <div class="ashra-box">
+        <span class="ashra-title">✨ RAMADAN KI FAZILAT</span>
+        <div style="font-size: 11px; color: #ccc;">Rehmat, Maghfirat, aur Najaat ka Mahina.</div>
+    </div>
+
+    <div class="input-group">
+        <input type="text" id="mName" placeholder="Member Name">
+        <input type="number" id="mPhone" placeholder="WhatsApp Number">
+        <input type="number" id="mWeight" placeholder="Weight (kg)" oninput="updateDiet()">
+    </div>
 
     <div class="toggle-row">
         <button id="lBtn" class="t-btn active" onclick="setGoal('loss')">FAT LOSS</button>
@@ -45,28 +61,16 @@
 
     <div id="resultsView">
         <div class="prot-card" id="protDisplay"></div>
+        <div class="meal-box"><h3>🌙 SAHUR</h3><p id="sahurTxt"></p></div>
+        <div class="meal-box"><h3>🕌 IFTARI</h3><p id="iftarTxt"></p></div>
+        <div class="meal-box" style="border-left-color:var(--accent-green);"><h3>🍽️ DINNER</h3><p id="dinnerTxt"></p></div>
 
-        <div class="meal-box">
-            <h3>🌙 SAHUR <small style="font-size:10px; color:#555;">Pre-Dawn</small></h3>
-            <p id="sahurTxt"></p>
-            <span class="micros" id="sahurMicros"></span>
-        </div>
-
-        <div class="meal-box">
-            <h3>🕌 IFTARI <small style="font-size:10px; color:#555;">Fast Break</small></h3>
-            <p id="iftarTxt"></p>
-            <span class="micros" id="iftarMicros"></span>
-        </div>
-
-        <div class="meal-box" style="border-left-color:var(--accent-green);">
-            <h3>🍽️ DINNER <small style="font-size:10px; color:#555;">Recovery</small></h3>
-            <p id="dinnerTxt"></p>
-            <span class="micros" id="dinnerMicros"></span>
-        </div>
+        <a href="#" class="whatsapp-btn" id="waLink" onclick="sendWhatsApp()">
+            📲 Share Plan on WhatsApp
+        </a>
 
         <div class="footer-dua">
-            <i>"Allahumma laka sumtu wa 'ala rizqika aftartu"</i><br>
-            <span style="color:var(--gold); font-size:11px;">GYM: 07:00 PM – 01:00 AM</span>
+            <span style="color:var(--gold);">GYM TIMINGS: 07:00 PM – 01:00 AM</span>
         </div>
     </div>
 </div>
@@ -97,19 +101,13 @@
             document.getElementById('protDisplay').innerText = `LOCKED: ${protein}G PROTEIN / DAY`;
 
             if (goal === 'loss') {
-                document.getElementById('sahurTxt').innerText = "5-6 Egg Whites + 1 Bowl Dahi + 1 Jowar Roti + 1 Apple.";
-                document.getElementById('sahurMicros').innerText = "Micros: B12, Probiotics, & Magnesium.";
-                document.getElementById('iftarTxt').innerText = "2 Dates + Nimbu Pani + 1 Bowl Bhuna Chana + Watermelon.";
-                document.getElementById('iftarMicros').innerText = "Micros: Iron, Zinc, & Electrolytes.";
-                document.getElementById('dinnerTxt').innerText = "200g Home Chicken or Paneer + Large Green Salad. No Rice.";
-                document.getElementById('dinnerMicros').innerText = "Micros: B6, Folate, & Calcium.";
+                document.getElementById('sahurTxt').innerText = "5-6 Egg Whites + 1 Bowl Dahi + 1 Jowar Roti.";
+                document.getElementById('iftarTxt').innerText = "2 Dates + Nimbu Pani + Bhuna Chana.";
+                document.getElementById('dinnerTxt').innerText = "200g Home Chicken/Paneer + Badi Plate Salad.";
             } else {
-                document.getElementById('sahurTxt').innerText = "3 Whole Eggs + 2 Parathe + 1 Bowl Dahi + 1 Banana.";
-                document.getElementById('sahurMicros').innerText = "Micros: Healthy Fats, Vitamin D, & Potassium.";
-                document.getElementById('iftarTxt').innerText = "3 Dates + 1 Glass Milkshake + Fruit Salad + Chana Chaat.";
-                document.getElementById('iftarMicros').innerText = "Micros: Vitamin C, Calcium, & Manganese.";
-                document.getElementById('dinnerTxt').innerText = "250g Chicken/Paneer Curry + 2 Bowls Rice + 1 Bowl Dal.";
-                document.getElementById('dinnerMicros').innerText = "Micros: Complex Carbs, B-Complex, & Phosphorus.";
+                document.getElementById('sahurTxt').innerText = "3 Whole Eggs + 2 Parathe + Dahi + 1 Kela.";
+                document.getElementById('iftarTxt').innerText = "3 Dates + Milkshake + Mix Fruit.";
+                document.getElementById('dinnerTxt').innerText = "250g Chicken/Paneer Curry + 2 Bowl Rice.";
             }
         } else {
             res.style.display = 'none';
@@ -117,33 +115,22 @@
         }
     }
 
+    function sendWhatsApp() {
+        const name = document.getElementById('mName').value || "Athlete";
+        const w = document.getElementById('mWeight').value;
+        const protein = (w * 2.2).toFixed(0);
+        const msg = `Asalam Walaikum Azhar! Mera Ramadan Plan:\nNaam: ${name}\nWeight: ${w}kg\nProtein Lock: ${protein}g\nGoal: ${goal.toUpperCase()}`;
+        const url = `https://wa.me/91XXXXXXXXXX?text=${encodeURIComponent(msg)}`; // Replace X with your number
+        window.open(url, '_blank');
+    }
+
     async function makePDF() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         const n = document.getElementById('mName').value || "Athlete";
-        const w = document.getElementById('mWeight').value;
-        
         doc.setFillColor(4, 22, 15); doc.rect(0, 0, 210, 297, 'F');
-        doc.setTextColor(212, 175, 55); doc.setFontSize(22);
-        doc.text("AZHAR FITNESS - RAMADAN PLAN", 105, 30, { align: "center" });
-        
-        doc.setTextColor(255, 255, 255); doc.setFontSize(14);
-        doc.text(`Name: ${n} | Weight: ${w}kg`, 20, 50);
-        doc.text(`Protein Lock: ${(w * 2.2).toFixed(0)}g`, 20, 60);
-        
-        doc.setTextColor(212, 175, 55); doc.text("SAHUR:", 20, 80);
-        doc.setTextColor(255, 255, 255); doc.setFontSize(11);
-        doc.text(doc.splitTextToSize(document.getElementById('sahurTxt').innerText, 160), 25, 90);
-
-        doc.setTextColor(212, 175, 55); doc.setFontSize(14); doc.text("IFTARI:", 20, 115);
-        doc.setTextColor(255, 255, 255); doc.setFontSize(11);
-        doc.text(doc.splitTextToSize(document.getElementById('iftarTxt').innerText, 160), 25, 125);
-
-        doc.setTextColor(212, 175, 55); doc.setFontSize(14); doc.text("DINNER:", 20, 150);
-        doc.setTextColor(255, 255, 255); doc.setFontSize(11);
-        doc.text(doc.splitTextToSize(document.getElementById('dinnerTxt').innerText, 160), 25, 160);
-
-        doc.save(`AFC_${n}_Diet.pdf`);
+        doc.setTextColor(212, 175, 55); doc.text("AZHAR FITNESS - RAMADAN PLAN", 105, 30, { align: "center" });
+        doc.save(`AFC_${n}.pdf`);
     }
 </script>
 </body>
