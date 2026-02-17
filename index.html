@@ -3,56 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>AFC | Ramadan Specialist</title>
+    <title>AFC | Ramadan Specialist Elite</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
-        :root { --gold: #d4af37; --dark: #000; --deep-green: #04160f; --accent-green: #27ae60; }
+        :root { 
+            --gold: #d4af37; 
+            --dark: #000; 
+            --deep-green: #04160f; 
+            --accent-green: #27ae60;
+            --pattern: url('https://www.transparenttextures.com/patterns/islamic-art.png');
+        }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--dark); color: #fff; margin: 0; padding: 10px; display: flex; justify-content: center; }
-        .app-shell { width: 100%; max-width: 420px; background: var(--deep-green); border-radius: 35px; padding: 25px; border: 1.5px solid var(--gold); min-height: 95vh; position: relative; }
         
-        .header { text-align: center; margin-bottom: 20px; }
-        .badge { background: var(--gold); color: #000; padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 800; }
-        
-        .ashra-box { background: rgba(255,255,255,0.03); border: 0.5px solid var(--gold); border-radius: 15px; padding: 12px; margin-bottom: 15px; font-size: 11px; }
-        .ashra-title { color: var(--gold); font-weight: bold; text-transform: uppercase; margin-bottom: 5px; display: block; border-bottom: 1px solid rgba(212,175,55,0.2); padding-bottom: 3px; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: var(--dark); 
+            color: #fff; margin: 0; padding: 10px; 
+            display: flex; justify-content: center;
+        }
 
-        .input-group input { width: 100%; background: #111; border: 1px solid #333; color: white; padding: 15px; border-radius: 12px; font-size: 16px; margin-bottom: 10px; outline: none; }
-        .toggle-row { display: flex; background: #000; padding: 4px; border-radius: 12px; margin-bottom: 20px; }
-        .t-btn { flex: 1; padding: 12px; border: none; border-radius: 10px; background: none; color: #555; font-weight: bold; cursor: pointer; }
-        .t-btn.active { background: var(--gold); color: #000; }
-        
+        /* App Shell with Premium Ramadan Theme */
+        .app-shell { 
+            width: 100%; max-width: 420px; 
+            background: var(--deep-green); 
+            background-image: var(--pattern);
+            border-radius: 40px; padding: 25px; 
+            border: 2px solid var(--gold); 
+            box-shadow: 0 15px 50px rgba(0,0,0,0.8);
+            position: relative;
+            min-height: 95vh;
+        }
+
+        .header { text-align: center; margin-bottom: 20px; }
+        .badge { background: var(--gold); color: #000; padding: 3px 12px; border-radius: 50px; font-size: 10px; font-weight: 800; text-transform: uppercase; }
+        .header h1 { font-size: 26px; color: var(--gold); margin: 5px 0; letter-spacing: 2px; font-weight: 900; }
+        .header p { font-size: 10px; color: #888; margin: 0; letter-spacing: 1px; }
+
+        /* Input Styling */
+        input { 
+            width: 100%; background: rgba(0,0,0,0.5); border: 1px solid #333; 
+            color: white; padding: 15px; border-radius: 15px; 
+            font-size: 16px; margin-bottom: 12px; outline: none;
+        }
+        input:focus { border-color: var(--gold); }
+
+        .toggle-row { display: flex; background: #000; padding: 5px; border-radius: 15px; margin-bottom: 20px; }
+        .t-btn { flex: 1; padding: 12px; border: none; border-radius: 12px; background: none; color: #555; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .t-btn.active { background: var(--gold); color: #000; box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3); }
+
+        /* Results Display */
         #resultsView { display: none; }
-        .prot-card { background: rgba(212,175,55,0.1); border: 1px solid var(--gold); padding: 12px; border-radius: 15px; text-align: center; margin-bottom: 15px; color: var(--gold); font-weight: bold; }
-        .meal-box { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 15px; margin-bottom: 12px; border-left: 4px solid var(--gold); }
-        .meal-box h3 { margin: 0 0 5px 0; font-size: 16px; color: var(--gold); display: flex; justify-content: space-between; }
-        .meal-box p { margin: 0; font-size: 13px; color: #ccc; line-height: 1.5; }
+        .prot-card { 
+            background: rgba(212, 175, 55, 0.15); border: 1px solid var(--gold); 
+            padding: 15px; border-radius: 18px; text-align: center; 
+            margin-bottom: 20px; color: var(--gold); font-weight: 900; font-size: 13px;
+        }
         
-        .whatsapp-btn { background: #25D366; color: #fff; width: 100%; padding: 15px; border: none; border-radius: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 15px; cursor: pointer; text-decoration: none; }
-        .footer-dua { text-align: center; border-top: 1px solid #222; margin-top: 20px; padding-top: 10px; font-size: 11px; color: #888; }
-        .pdf-fab { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--accent-green); border-radius: 50%; border: none; display: none; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0,0,0,0.5); cursor: pointer; }
+        .meal-box { 
+            background: rgba(255,255,255,0.03); padding: 18px; border-radius: 20px; 
+            margin-bottom: 12px; border-left: 5px solid var(--gold);
+        }
+        .meal-box h3 { margin: 0 0 5px 0; font-size: 16px; color: var(--gold); }
+        .meal-box p { margin: 0; font-size: 13px; color: #ccc; line-height: 1.5; }
+
+        /* Nutrition Breakdown Table */
+        .macro-table { width: 100%; margin-top: 20px; border-collapse: collapse; font-size: 12px; border: 1px solid rgba(212,175,55,0.3); border-radius: 10px; overflow: hidden; }
+        .macro-table th { background: var(--gold); color: #000; padding: 10px; }
+        .macro-table td { padding: 10px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(0,0,0,0.2); }
+
+        /* Footer Branding */
+        .footer { 
+            margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(212,175,55,0.2); 
+            text-align: center;
+        }
+        .footer-logo { font-size: 18px; font-weight: 900; color: var(--gold); letter-spacing: 2px; }
+        .timing { color: var(--accent-green); font-weight: bold; font-size: 12px; display: block; margin: 8px 0; }
+        .dua { font-size: 11px; color: #666; font-style: italic; }
+
+        .pdf-fab { 
+            position: fixed; bottom: 30px; right: 25px; width: 65px; height: 65px; 
+            background: var(--accent-green); border-radius: 50%; border: none; 
+            display: none; align-items: center; justify-content: center; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5); cursor: pointer; z-index: 1000; 
+        }
     </style>
 </head>
 <body>
 
 <div class="app-shell">
     <div class="header">
-        <span class="badge">Ramadan Specialist</span>
-        <h1 style="color:var(--gold); margin:5px 0;">AZHAR FITNESS</h1>
-        <p style="font-size:10px; color:#666;">DIET & WHATSAPP CONNECT</p>
+        <span class="badge">Elite Coaching</span>
+        <h1>AZHAR FITNESS</h1>
+        <p>RAMADAN SPECIALIST SYSTEM</p>
     </div>
 
-    <div class="ashra-box">
-        <span class="ashra-title">✨ RAMADAN KI FAZILAT</span>
-        <div style="font-size: 11px; color: #ccc;">Rehmat, Maghfirat, aur Najaat ka Mahina.</div>
-    </div>
-
-    <div class="input-group">
-        <input type="text" id="mName" placeholder="Member Name">
-        <input type="number" id="mPhone" placeholder="WhatsApp Number">
-        <input type="number" id="mWeight" placeholder="Weight (kg)" oninput="updateDiet()">
-    </div>
+    <input type="text" id="mName" placeholder="Full Member Name">
+    <input type="number" id="mWeight" placeholder="Enter Weight (kg)" oninput="calculateDiet()">
 
     <div class="toggle-row">
         <button id="lBtn" class="t-btn active" onclick="setGoal('loss')">FAT LOSS</button>
@@ -61,67 +107,88 @@
 
     <div id="resultsView">
         <div class="prot-card" id="protDisplay"></div>
+
         <div class="meal-box"><h3>🌙 SAHUR</h3><p id="sahurTxt"></p></div>
         <div class="meal-box"><h3>🕌 IFTARI</h3><p id="iftarTxt"></p></div>
-        <div class="meal-box" style="border-left-color:var(--accent-green);"><h3>🍽️ DINNER</h3><p id="dinnerTxt"></p></div>
+        <div class="meal-box" style="border-left-color: var(--accent-green);"><h3>🍽️ DINNER (POST-GYM)</h3><p id="dinnerTxt"></p></div>
 
-        <a href="#" class="whatsapp-btn" id="waLink" onclick="sendWhatsApp()">
-            📲 Share Plan on WhatsApp
-        </a>
+        <table class="macro-table">
+            <thead><tr><th>Meal</th><th>P (g)</th><th>C (g)</th><th>F (g)</th></tr></thead>
+            <tbody>
+                <tr><td>Sahur</td><td id="sP">-</td><td id="sC">-</td><td id="sF">-</td></tr>
+                <tr><td>Iftari</td><td id="iP">-</td><td id="iC">-</td><td id="iF">-</td></tr>
+                <tr><td>Dinner</td><td id="dP">-</td><td id="dC">-</td><td id="dF">-</td></tr>
+            </tbody>
+        </table>
 
-        <div class="footer-dua">
-            <span style="color:var(--gold);">GYM TIMINGS: 07:00 PM – 01:00 AM</span>
+        <div class="footer">
+            <div class="footer-logo">AZHAR FITNESS</div>
+            <span class="timing">GYM TIMINGS: 07:00 PM – 01:00 AM</span>
+            <span class="dua">"Allahumma laka sumtu wa 'ala rizqika aftartu"</span>
+            <p style="font-size: 9px; color: #333; margin-top: 10px;">© 2026 AzharFitPro Elite Nutrition</p>
         </div>
     </div>
 </div>
 
 <button class="pdf-fab" id="pdfBtn" onclick="makePDF()">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
 </button>
 
 <script>
-    let goal = 'loss';
+    let currentGoal = 'loss';
 
     function setGoal(g) {
-        goal = g;
+        currentGoal = g;
         document.getElementById('lBtn').classList.toggle('active', g === 'loss');
         document.getElementById('gBtn').classList.toggle('active', g === 'gain');
-        updateDiet();
+        calculateDiet();
     }
 
-    function updateDiet() {
+    function calculateDiet() {
         const w = document.getElementById('mWeight').value;
         const res = document.getElementById('resultsView');
         const fab = document.getElementById('pdfBtn');
 
-        if (w > 30) {
-            res.style.display = 'block';
-            fab.style.display = 'flex';
-            const protein = (w * 2.2).toFixed(0);
-            document.getElementById('protDisplay').innerText = `LOCKED: ${protein}G PROTEIN / DAY`;
+        if (w >= 35) {
+            res.style.display = 'block'; fab.style.display = 'flex';
+            
+            // --- AZHAR SPECIALIST FORMULA ---
+            const p = (w * 2.2).toFixed(0); 
+            const c = currentGoal === 'loss' ? (w * 1.5).toFixed(0) : (w * 4).toFixed(0);
+            const cal = currentGoal === 'loss' ? (w * 25).toFixed(0) : (w * 35).toFixed(0);
 
-            if (goal === 'loss') {
-                document.getElementById('sahurTxt').innerText = "5-6 Egg Whites + 1 Bowl Dahi + 1 Jowar Roti.";
-                document.getElementById('iftarTxt').innerText = "2 Dates + Nimbu Pani + Bhuna Chana.";
-                document.getElementById('dinnerTxt').innerText = "200g Home Chicken/Paneer + Badi Plate Salad.";
+            document.getElementById('protDisplay').innerText = `LOCKED: ${p}G PROTEIN | ${c}G CARBS | ~${cal} KCAL`;
+
+            if (currentGoal === 'loss') {
+                updateText("5 Egg Whites + 100g Paneer + 1 Jowar Roti", "2 Dates + 100g Bhuna Chana + Watermelon", "200g Grilled Chicken + Large Salad");
+                distributeMacros(p, c, 35); // 35g fat total for loss
             } else {
-                document.getElementById('sahurTxt').innerText = "3 Whole Eggs + 2 Parathe + Dahi + 1 Kela.";
-                document.getElementById('iftarTxt').innerText = "3 Dates + Milkshake + Mix Fruit.";
-                document.getElementById('dinnerTxt').innerText = "250g Chicken/Paneer Curry + 2 Bowl Rice.";
+                updateText("3 Whole Eggs + 2 Parathe + 1 Bowl Dahi", "3 Dates + 500ml Milkshake + Chana Chaat", "250g Chicken/Paneer Curry + 2 Bowls Rice");
+                distributeMacros(p, c, 65); // 65g fat total for gain
             }
-        } else {
-            res.style.display = 'none';
-            fab.style.display = 'none';
-        }
+        } else { res.style.display = 'none'; fab.style.display = 'none'; }
     }
 
-    function sendWhatsApp() {
-        const name = document.getElementById('mName').value || "Athlete";
-        const w = document.getElementById('mWeight').value;
-        const protein = (w * 2.2).toFixed(0);
-        const msg = `Asalam Walaikum Azhar! Mera Ramadan Plan:\nNaam: ${name}\nWeight: ${w}kg\nProtein Lock: ${protein}g\nGoal: ${goal.toUpperCase()}`;
-        const url = `https://wa.me/91XXXXXXXXXX?text=${encodeURIComponent(msg)}`; // Replace X with your number
-        window.open(url, '_blank');
+    function updateText(s, i, d) {
+        document.getElementById('sahurTxt').innerText = s;
+        document.getElementById('iftarTxt').innerText = i;
+        document.getElementById('dinnerTxt').innerText = d;
+    }
+
+    function distributeMacros(p, c, f) {
+        // Correct Meal-Specific Distribution (No more same numbers!)
+        // Sahur: 30% P, 40% C, 30% F
+        setRow('s', p*0.3, c*0.4, f*0.3);
+        // Iftari: 20% P, 40% C, 20% F
+        setRow('i', p*0.2, c*0.4, f*0.2);
+        // Dinner (Post-Gym): 50% P, 20% C, 50% F
+        setRow('d', p*0.5, c*0.2, f*0.5);
+    }
+
+    function setRow(id, p, c, f) {
+        document.getElementById(id+'P').innerText = p.toFixed(0);
+        document.getElementById(id+'C').innerText = c.toFixed(0);
+        document.getElementById(id+'F').innerText = f.toFixed(0);
     }
 
     async function makePDF() {
@@ -129,8 +196,11 @@
         const doc = new jsPDF();
         const n = document.getElementById('mName').value || "Athlete";
         doc.setFillColor(4, 22, 15); doc.rect(0, 0, 210, 297, 'F');
-        doc.setTextColor(212, 175, 55); doc.text("AZHAR FITNESS - RAMADAN PLAN", 105, 30, { align: "center" });
-        doc.save(`AFC_${n}.pdf`);
+        doc.setTextColor(212, 175, 55); doc.setFontSize(22);
+        doc.text("AZHAR FITNESS - RAMADAN SPECIALIST", 105, 30, { align: "center" });
+        doc.setTextColor(255, 255, 255); doc.setFontSize(14);
+        doc.text(`Athlete: ${n} | Weight: ${document.getElementById('mWeight').value}kg`, 20, 50);
+        doc.save(`AFC_Elite_${n}.pdf`);
     }
 </script>
 </body>
