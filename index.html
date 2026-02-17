@@ -3,80 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AFC | Ramadan Specialist Elite</title>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Poppins:wght@300;400;600;900&display=swap" rel="stylesheet">
+    <title>AFC | Elite Ramadan Specialist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
-        :root { 
-            --gold: #d4af37; 
-            --dark: #000; 
-            --deep-green: #04160f; 
-            --accent-green: #27ae60;
-            --pattern: url('https://www.transparenttextures.com/patterns/islamic-art.png');
-        }
+        :root { --gold: #d4af37; --dark: #000; --deep-green: #04160f; --accent-green: #27ae60; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Poppins', sans-serif; background: var(--dark); color: #fff; margin: 0; padding: 10px; display: flex; justify-content: center; }
-        
-        .app-shell { 
-            width: 100%; max-width: 420px; background: var(--deep-green); 
-            background-image: var(--pattern); border-radius: 40px; padding: 25px; 
-            border: 2px solid var(--gold); box-shadow: 0 15px 50px rgba(0,0,0,0.8);
-            position: relative; min-height: 95vh;
-        }
-
+        .app-shell { width: 100%; max-width: 420px; background: var(--deep-green); border-radius: 40px; padding: 25px; border: 2px solid var(--gold); box-shadow: 0 15px 50px rgba(0,0,0,0.8); min-height: 95vh; }
         .header { text-align: center; margin-bottom: 20px; }
-        .badge { background: var(--gold); color: #000; padding: 3px 12px; border-radius: 50px; font-size: 10px; font-weight: 800; text-transform: uppercase; }
         .header h1 { font-size: 26px; color: var(--gold); margin: 5px 0; font-weight: 900; letter-spacing: 2px; }
-
-        /* Dua Card Styling */
-        .dua-card {
-            background: rgba(0,0,0,0.4); border: 1px solid var(--gold);
-            padding: 15px; border-radius: 20px; margin-bottom: 20px; text-align: center;
-        }
-        .arabic { font-family: 'Amiri', serif; font-size: 22px; color: var(--gold); direction: rtl; line-height: 1.6; margin-bottom: 10px; }
-        .transliteration { font-size: 11px; color: #ffd369; margin-bottom: 8px; font-style: italic; }
-        .meaning { font-size: 10px; color: #e0e0e0; border-top: 1px solid rgba(212,175,55,0.2); padding-top: 8px; }
-
         input { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid #333; color: white; padding: 15px; border-radius: 15px; font-size: 16px; margin-bottom: 12px; outline: none; }
         .toggle-row { display: flex; background: #000; padding: 5px; border-radius: 15px; margin-bottom: 20px; }
         .t-btn { flex: 1; padding: 12px; border: none; border-radius: 12px; background: none; color: #555; font-weight: bold; cursor: pointer; }
-        .t-btn.active { background: var(--gold); color: #000; box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3); }
-
+        .t-btn.active { background: var(--gold); color: #000; }
         #resultsView { display: none; }
         .prot-card { background: rgba(212, 175, 55, 0.15); border: 1px solid var(--gold); padding: 15px; border-radius: 18px; text-align: center; margin-bottom: 20px; color: var(--gold); font-weight: 900; }
         .meal-box { background: rgba(255,255,255,0.03); padding: 18px; border-radius: 20px; margin-bottom: 12px; border-left: 5px solid var(--gold); }
-        .macro-table { width: 100%; margin-top: 20px; border-collapse: collapse; font-size: 12px; border: 1px solid rgba(212,175,55,0.3); text-align: center; }
-        .macro-table th { background: var(--gold); color: #000; padding: 8px; }
-        .macro-table td { padding: 8px; background: rgba(0,0,0,0.2); border-bottom: 1px solid rgba(255,255,255,0.05); }
-
-        .footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(212,175,55,0.2); text-align: center; }
-        .timing { color: var(--accent-green); font-weight: bold; font-size: 12px; display: block; margin: 8px 0; }
-
-        .pdf-fab { position: fixed; bottom: 30px; right: 25px; width: 65px; height: 65px; background: var(--accent-green); border-radius: 50%; border: none; display: none; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0,0,0,0.5); z-index: 1000; }
+        .workout-box { background: rgba(39, 174, 96, 0.1); border: 1px dashed var(--accent-green); padding: 15px; border-radius: 20px; margin-top: 20px; }
+        .footer { margin-top: 30px; text-align: center; border-top: 1px solid rgba(212,175,55,0.2); padding-top: 20px; }
+        .timing { color: var(--accent-green); font-weight: bold; font-size: 12px; display: block; margin-bottom: 10px; }
+        .pdf-fab { position: fixed; bottom: 30px; right: 25px; width: 65px; height: 65px; background: var(--accent-green); border-radius: 50%; border: none; display: none; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0,0,0,0.5); z-index: 1000; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div class="app-shell">
     <div class="header">
-        <span class="badge">Elite Specialist</span>
         <h1>AZHAR FITNESS</h1>
-        <p style="font-size: 10px; color: #888;">RAMADAN SPECIALIST SYSTEM</p>
-    </div>
-
-    <div class="dua-card">
-        <h2 style="font-size: 14px; color: var(--gold); margin-top: 0;">🌙 Iftar Ki Dua</h2>
-        <div class="arabic">
-            اللَّهُمَّ إِنِّي لَكَ صُمْتُ وَبِكَ آمَنْتُ وَعَلَىٰ رِزْقِكَ أَفْطَرْتُ <br>
-            ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوقُ
-        </div>
-        <div class="transliteration">
-            Allahumma inni laka sumtu wa bika aamantu wa ‘ala rizqika aftartu. <br>
-            Zahabaz-zama’u wabtallatil-‘urooq...
-        </div>
-        <div class="meaning">
-            Ya Allah, maine Tere liye roza rakha, Tujh par imaan laya, aur Tere diye hue rizq se iftar kiya. Pyaas khatam ho gayi, ragain tar ho gayi.
-        </div>
+        <p style="font-size: 10px; color: #888;">ELITE RAMADAN SPECIALIST</p>
     </div>
 
     <input type="text" id="mName" placeholder="Full Member Name">
@@ -91,21 +46,16 @@
         <div class="prot-card" id="protDisplay"></div>
         <div class="meal-box"><h3>🌙 SAHUR</h3><p id="sahurTxt"></p></div>
         <div class="meal-box"><h3>🕌 IFTARI</h3><p id="iftarTxt"></p></div>
-        <div class="meal-box" style="border-left-color: var(--accent-green);"><h3>🍽️ DINNER (POST-GYM)</h3><p id="dinnerTxt"></p></div>
+        <div class="meal-box" style="border-left-color: var(--accent-green);"><h3>🍽️ DINNER</h3><p id="dinnerTxt"></p></div>
 
-        <table class="macro-table">
-            <thead><tr><th>Meal</th><th>P (g)</th><th>C (g)</th><th>F (g)</th></tr></thead>
-            <tbody>
-                <tr><td>Sahur</td><td id="sP">-</td><td id="sC">-</td><td id="sF">-</td></tr>
-                <tr><td>Iftari</td><td id="iP">-</td><td id="iC">-</td><td id="iF">-</td></tr>
-                <tr><td>Dinner</td><td id="dP">-</td><td id="dC">-</td><td id="dF">-</td></tr>
-            </tbody>
-        </table>
+        <div class="workout-box">
+            <h3 style="color: var(--accent-green); margin-top:0;">⚡ RAMADAN WORKOUT</h3>
+            <p id="workoutTxt" style="font-size: 13px; color: #eee;"></p>
+        </div>
 
         <div class="footer">
-            <div style="font-weight: 900; color: var(--gold);">AZHAR FITNESS CENTER</div>
             <span class="timing">GYM TIMINGS: 07:00 PM – 01:00 AM</span>
-            <p style="font-size: 9px; color: #333;">© 2026 AzharFitPro Elite Nutrition</p>
+            <p style="font-size: 9px; color: #444;">© 2026 AzharFitPro Elite Nutrition | Mumbra</p>
         </div>
     </div>
 </div>
@@ -116,7 +66,6 @@
 
 <script>
     let currentGoal = 'loss';
-
     function setGoal(g) {
         currentGoal = g;
         document.getElementById('lBtn').classList.toggle('active', g === 'loss');
@@ -128,41 +77,24 @@
         const w = document.getElementById('mWeight').value;
         const res = document.getElementById('resultsView');
         const fab = document.getElementById('pdfBtn');
-
         if (w >= 35) {
             res.style.display = 'block'; fab.style.display = 'flex';
             const p = (w * 2.2).toFixed(0); 
-            const c = currentGoal === 'loss' ? (w * 1.5).toFixed(0) : (w * 4).toFixed(0);
             const cal = currentGoal === 'loss' ? (w * 25).toFixed(0) : (w * 35).toFixed(0);
-
-            document.getElementById('protDisplay').innerText = `LOCKED: ${p}G PROTEIN | ${c}G CARBS | ~${cal} KCAL`;
-
+            document.getElementById('protDisplay').innerText = `LOCKED: ${p}G PROTEIN | ~${cal} KCAL`;
+            
             if (currentGoal === 'loss') {
-                updateText("5 Egg Whites + 100g Paneer + 1 Jowar Roti", "2 Dates + 100g Bhuna Chana + Watermelon", "200g Grilled Chicken + Large Salad");
-                distributeMacros(p, c, 35);
+                document.getElementById('sahurTxt').innerText = "5 Egg Whites + 100g Paneer + 1 Jowar Roti.";
+                document.getElementById('iftarTxt').innerText = "2 Dates + 100g Bhuna Chana + Watermelon.";
+                document.getElementById('dinnerTxt').innerText = "200g Grilled Chicken + Large Salad.";
+                document.getElementById('workoutTxt').innerText = "Cardio 20 mins (Empty stomach before Iftar) + High Rep Weight Training (Post Iftar).";
             } else {
-                updateText("3 Whole Eggs + 2 Parathe + 1 Bowl Dahi", "3 Dates + 500ml Milkshake + Chana Chaat", "250g Chicken/Paneer Curry + 2 Bowls Rice");
-                distributeMacros(p, c, 60);
+                document.getElementById('sahurTxt').innerText = "3 Whole Eggs + 2 Parathe + 1 Bowl Dahi.";
+                document.getElementById('iftarTxt').innerText = "3 Dates + 500ml Milkshake + Chana Chaat.";
+                document.getElementById('dinnerTxt').innerText = "250g Chicken Curry + 2 Bowls Rice.";
+                document.getElementById('workoutTxt').innerText = "Heavy Weight Training (9:30 PM - 11:00 PM) + Compound movements only.";
             }
         } else { res.style.display = 'none'; fab.style.display = 'none'; }
-    }
-
-    function updateText(s, i, d) {
-        document.getElementById('sahurTxt').innerText = s;
-        document.getElementById('iftarTxt').innerText = i;
-        document.getElementById('dinnerTxt').innerText = d;
-    }
-
-    function distributeMacros(p, c, f) {
-        setRow('s', p*0.3, c*0.4, f*0.3);
-        setRow('i', p*0.2, c*0.4, f*0.2);
-        setRow('d', p*0.5, c*0.2, f*0.5);
-    }
-
-    function setRow(id, p, c, f) {
-        document.getElementById(id+'P').innerText = p.toFixed(0);
-        document.getElementById(id+'C').innerText = c.toFixed(0);
-        document.getElementById(id+'F').innerText = f.toFixed(0);
     }
 
     async function makePDF() {
@@ -170,28 +102,32 @@
         const doc = new jsPDF();
         const n = document.getElementById('mName').value || "Athlete";
         const w = document.getElementById('mWeight').value;
-        
-        doc.setFillColor(4, 22, 15); doc.rect(0, 0, 210, 45, 'F');
-        doc.setTextColor(212, 175, 55); doc.setFontSize(22); doc.text("AZHAR FITNESS CENTER", 105, 25, { align: "center" });
-        
-        doc.setTextColor(0,0,0); doc.setFontSize(12);
-        doc.text(`Athlete: ${n} | Weight: ${w}kg | Goal: ${currentGoal.toUpperCase()}`, 20, 55);
-        
-        doc.setDrawColor(212, 175, 55); doc.rect(15, 65, 180, 55);
-        doc.setTextColor(184, 134, 11); doc.setFontSize(13); doc.text("IFTAR KI MASNOON DUA", 105, 75, { align: "center" });
-        doc.setFontSize(9); doc.setTextColor(0, 0, 0);
-        doc.text("Allahumma inni laka sumtu wa bika aamantu wa 'ala rizqika aftartu.", 20, 85);
-        doc.text("Tarjuma: Ya Allah, maine Tere liye roza rakha aur Tere diye rizq se iftar kiya.", 20, 92);
-        doc.text("Zahabaz-zama’u wabtallatil-‘urooq wa thabatal-ajru in sha Allah.", 20, 102);
-        doc.text("Tarjuma: Pyaas khatam hui, ragain tar hui aur ajar sabit hua, In Sha Allah.", 20, 109);
+        const p = (w * 2.2).toFixed(0);
 
-        doc.setFontSize(14); doc.setTextColor(212, 175, 55); doc.text("DIET SCHEDULE", 20, 140);
-        doc.setFontSize(10); doc.setTextColor(0, 0, 0);
+        doc.setFillColor(4, 22, 15); doc.rect(0, 0, 210, 40, 'F');
+        doc.setTextColor(212, 175, 55); doc.setFontSize(22); doc.text("AZHAR FITNESS CENTER", 105, 25, { align: "center" });
+
+        doc.setTextColor(0,0,0); doc.setFontSize(11);
+        doc.text(`Athlete: ${n} | Weight: ${w}kg | Goal: ${currentGoal.toUpperCase()}`, 20, 50);
+        doc.text(`PROTEIN LOCK: ${p}g Daily`, 20, 58);
+
+        doc.setDrawColor(212, 175, 55); doc.rect(15, 65, 180, 55);
+        doc.setTextColor(184, 134, 11); doc.setFontSize(14); doc.text("DUAS & BARKAT", 105, 75, { align: "center" });
+        doc.setFontSize(9); doc.setTextColor(0,0,0);
+        doc.text("Sehri Dua: 'Wa bi-sawmi ghadinn nawaiytu min shahri ramadan'", 20, 85);
+        doc.text("Iftar Dua: 'Dhahabaz-zama’u wabtallatil-‘urooq wa thabatal-ajru in sha Allah'", 20, 95);
+        doc.text("Surah Al-Qadr (Tarjuma): Beshak Humne ise Shab-e-Qadr mein nazil kiya.", 20, 105);
+
+        doc.setFontSize(14); doc.setTextColor(212, 175, 55); doc.text("DIET & WORKOUT PLAN", 20, 140);
+        doc.setFontSize(9); doc.setTextColor(0,0,0);
         doc.text(`SAHUR: ${document.getElementById('sahurTxt').innerText}`, 20, 150);
         doc.text(`IFTARI: ${document.getElementById('iftarTxt').innerText}`, 20, 160);
         doc.text(`DINNER: ${document.getElementById('dinnerTxt').innerText}`, 20, 170);
+        doc.setTextColor(39, 174, 96);
+        doc.text(`WORKOUT: ${document.getElementById('workoutTxt').innerText}`, 20, 185);
 
-        doc.setTextColor(39, 174, 96); doc.text("GYM TIMINGS: 07:00 PM - 01:00 AM", 105, 230, { align: "center" });
+        doc.setTextColor(150, 150, 150); doc.text("ZAKAT CALCULATOR: azharfitpro.com/zakat", 105, 210, { align: "center" });
+        doc.setTextColor(39, 174, 96); doc.setFontSize(12); doc.text("GYM TIMINGS: 07:00 PM - 01:00 AM", 105, 230, { align: "center" });
         doc.save(`AFC_Elite_Plan_${n}.pdf`);
     }
 </script>
