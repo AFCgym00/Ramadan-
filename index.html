@@ -122,6 +122,12 @@
 </button>
 
 <script>
+        if (currentGoal === 'loss') {
+        document.getElementById('sahurHtml').innerHTML = "<b>Diet:</b> 5-6 Egg Whites + 1 Bowl Dahi + 1 Jowar Roti.<br><b>Micros:</b> Selenium, B12, & Probiotics (for Gut Health).";
+        document.getElementById('iftarHtml').innerHTML = "<b>Diet:</b> 2 Dates + Nimbu Pani + Bhuna Chana.<br><b>Micros:</b> Iron, Zinc, & Electrolytes (for Hydration).";
+        document.getElementById('dinnerHtml').innerHTML = "<b>Diet:</b> 200g Chicken/Paneer + Green Salad.<br><b>Micros:</b> B6, Folate, & Calcium (for Recovery).";
+    }
+
     let currentGoal = 'loss';
 
     function setGoal(g) {
