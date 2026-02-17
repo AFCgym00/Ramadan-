@@ -92,3 +92,23 @@ function shareOnWhatsApp() {
 
 // Initialize Timer on Load
 window.onload = startIftarTimer;
+
+function setRow(id, p, c, f) {
+    document.getElementById(id+'P').innerText = p.toFixed(0);
+    document.getElementById(id+'C').innerText = c.toFixed(0);
+    document.getElementById(id+'F').innerText = f.toFixed(0);
+}
+
+// 4. WhatsApp Share
+function shareOnWhatsApp() {
+    const name = document.getElementById('mName').value || "Athlete";
+    const weight = document.getElementById('mWeight').value;
+    const protein = (weight * 2.2).toFixed(0);
+    
+    const message = `*AZHAR FITNESS (AFC) ELITE PLAN*%0A%0A*Name:* ${name}%0A*Weight:* ${weight}kg%0A*Goal:* ${currentGoal.toUpperCase()}%0A*Protein Lock:* ${protein}g%0A%0A*Gym Timings:* 07:00 PM - 01:00 AM%0A%0A_Generated via AzharFitPro_`;
+    
+    window.open(`https://wa.me/?text=${message}`, '_blank');
+}
+
+// Initialize Timer on Load
+window.onload = startIftarTimer;
