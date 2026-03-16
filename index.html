@@ -1,151 +1,215 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AFC Elite | Ramadan Specialist</title>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Poppins:wght@300;400;600;900&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <style>
-        :root { --gold: #d4af37; --dark: #000; --deep-green: #04160f; --accent-green: #27ae60; }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Poppins', sans-serif; }
-        body { background: var(--dark); color: #fff; margin: 0; padding: 10px; display: flex; justify-content: center; }
-        
-        .app-shell { 
-            width: 100%; max-width: 450px; background: var(--deep-green); 
-            border-radius: 40px; padding: 25px; border: 2px solid var(--gold); 
-            box-shadow: 0 15px 50px rgba(0,0,0,0.8); position: relative;
-        }
+<style>
+.pricing-section{
+font-family: Arial;
+display:flex;
+flex-wrap:wrap;
+gap:20px;
+justify-content:center;
+}
 
-        .header { text-align: center; margin-bottom: 25px; }
-        .header h1 { font-size: 28px; color: var(--gold); margin: 0; font-weight: 900; letter-spacing: 2px; }
-        .badge { background: var(--gold); color: #000; padding: 4px 15px; border-radius: 50px; font-size: 11px; font-weight: bold; text-transform: uppercase; }
+.plan{
+border:1px solid #ddd;
+border-radius:10px;
+padding:20px;
+width:250px;
+text-align:center;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
 
-        .dua-card { background: rgba(0,0,0,0.4); border: 1px solid var(--gold); padding: 15px; border-radius: 20px; margin-bottom: 20px; text-align: center; }
-        .arabic { font-family: 'Amiri', serif; font-size: 22px; color: var(--gold); direction: rtl; line-height: 1.6; }
-        .trans { font-size: 11px; color: #ffd369; font-style: italic; margin-top: 5px; }
+.plan h3{
+margin-bottom:10px;
+}
 
-        input { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid #333; color: white; padding: 14px; border-radius: 15px; font-size: 16px; margin-bottom: 15px; outline: none; border-left: 4px solid var(--gold); }
-        .t-row { display: flex; background: #000; padding: 5px; border-radius: 15px; margin-bottom: 20px; }
-        .t-btn { flex: 1; padding: 12px; border: none; border-radius: 12px; background: none; color: #555; font-weight: bold; cursor: pointer; }
-        .t-btn.active { background: var(--gold); color: #000; }
+.price{
+font-size:28px;
+font-weight:bold;
+color:#e63946;
+margin:10px 0;
+}
 
-        #resultsView { display: none; }
-        .meal-box { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 20px; margin-bottom: 10px; border-left: 5px solid var(--gold); }
-        .meal-box h3 { margin: 0; font-size: 14px; color: var(--gold); }
-        .meal-box p { margin: 5px 0 0; font-size: 12px; color: #ccc; }
+.plan ul{
+list-style:none;
+padding:0;
+}
 
-        .zakat-box { background: rgba(212, 175, 55, 0.05); border: 1px solid rgba(212, 175, 55, 0.3); padding: 15px; border-radius: 20px; margin-top: 20px; text-align: center; }
-        .pdf-fab { position: fixed; bottom: 30px; right: 25px; width: 65px; height: 65px; background: var(--accent-green); border-radius: 50%; border: none; display: none; align-items: center; justify-content: center; box-shadow: 0 8px 25px rgba(0,0,0,0.5); z-index: 1000; cursor: pointer; }
-    </style>
-</head>
-<body>
+.plan li{
+margin:8px 0;
+}
 
-<div class="app-shell">
-    <div class="header">
-        <span class="badge">Elite Ramadan Specialist</span>
-        <h1>AZHAR FITNESS</h1>
-        <p style="font-size: 11px; color: var(--accent-green); font-weight: bold;">GYM: 07:00 PM – 01:00 AM</p>
-    </div>
+.btn{
+display:inline-block;
+margin-top:10px;
+padding:10px 20px;
+background:#000;
+color:#fff;
+text-decoration:none;
+border-radius:5px;
+}
 
-    <div class="dua-card">
-        <div class="arabic">اللَّهُمَّ إِنِّي لَكَ صُمْتُ وَعَلَى رِزْقِكَ أَفْطَرْتُ</div>
-        <div class="trans">Allahumma inni laka sumtu wa 'ala rizqika aftartu</div>
-        <div style="font-size: 10px; color: #aaa; margin-top:5px;">Ya Allah, maine Tere liye roza rakha aur Tere rizq se iftar kiya.</div>
-    </div>
+.whatsapp{
+background:#25D366;
+}
+</style>
 
-    <input type="text" id="mName" placeholder="Athlete Name">
-    <input type="number" id="mWeight" placeholder="Body Weight (kg)" oninput="calculateEliteDiet()">
+<h2 style="text-align:center;">AFC Gym Membership Plans</h2>
 
-    <div class="t-row">
-        <button id="lBtn" class="t-btn active" onclick="setGoal('loss')">FAT LOSS</button>
-        <button id="gBtn" class="t-btn" onclick="setGoal('gain')">WEIGHT GAIN</button>
-    </div>
+<div class="pricing-section">
 
-    <div id="resultsView">
-        <div id="protDisp" style="text-align:center; color:var(--gold); font-weight:900; margin-bottom:15px;"></div>
-        <div class="meal-box"><h3>🌙 SAHUR</h3><p id="sTxt"></p></div>
-        <div class="meal-box"><h3>🕌 IFTARI</h3><p id="iTxt"></p></div>
-        <div class="meal-box" style="border-left-color:var(--accent-green);"><h3>🍽️ DINNER</h3><p id="dTxt"></p></div>
-    </div>
-
-    <div class="zakat-box">
-        <h3 style="color: var(--gold); margin:0 0 10px 0; font-size: 14px;">ZAKAT CALCULATOR (2.5%)</h3>
-        <input type="number" id="zVal" placeholder="Total Assets ₹" oninput="doZakat()">
-        <div id="zRes" style="font-weight:900; color:var(--gold); display:none; margin-top:10px;"></div>
-    </div>
+<div class="plan">
+<h3>Strength Training</h3>
+<div class="price">₹1200+</div>
+<ul>
+<li>1 Month – ₹1200</li>
+<li>3 Months – ₹2800</li>
+<li>6 Months – ₹5000</li>
+<li>12 Months – ₹9000</li>
+</ul>
+<a class="btn" href="#">Join Now</a>
+<a class="btn whatsapp" href="https://wa.me/91XXXXXXXXXX">WhatsApp</a>
 </div>
 
-<button class="pdf-fab" id="pdfBtn" onclick="generateProperPDF()">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-</button>
+<div class="plan">
+<h3>Strength + Cardio</h3>
+<div class="price">₹1800+</div>
+<ul>
+<li>1 Month – ₹1800</li>
+<li>3 Months – ₹4000</li>
+<li>6 Months – ₹8000</li>
+<li>12 Months – ₹12000</li>
+</ul>
+<a class="btn" href="#">Join Now</a>
+<a class="btn whatsapp" href="https://wa.me/91XXXXXXXXXX">WhatsApp</a>
+</div>
 
-<script>
-    let goal = 'loss';
-    function setGoal(g) {
-        goal = g;
-        document.getElementById('lBtn').classList.toggle('active', g === 'loss');
-        document.getElementById('gBtn').classList.toggle('active', g === 'gain');
-        calculateEliteDiet();
-    }
+<div class="plan">
+<h3>Personal Training</h3>
+<div class="price">₹8000</div>
+<ul>
+<li>1 Month Personal Training</li>
+<li>Customized Workout Plan</li>
+<li>Trainer Guidance</li>
+</ul>
+<a class="btn" href="#">Join Now</a>
+<a class="btn whatsapp" href="https://wa.me/91XXXXXXXXXX">WhatsApp</a>
+</div>
 
-    function calculateEliteDiet() {
-        const w = document.getElementById('mWeight').value;
-        const res = document.getElementById('resultsView');
-        const fab = document.getElementById('pdfBtn');
-        if (w >= 35) {
-            res.style.display = 'block'; fab.style.display = 'flex';
-            const p = (w * 2.2).toFixed(0);
-            document.getElementById('protDisp').innerText = `PROTEIN LOCK: ${p}G DAILY`;
-            if (goal === 'loss') {
-                document.getElementById('sTxt').innerText = "5 Egg Whites + 100g Paneer + 1 Jowar Roti.";
-                document.getElementById('iTxt').innerText = "2 Dates + 100g Bhuna Chana + Watermelon.";
-                document.getElementById('dTxt').innerText = "200g Grilled Chicken + Large Salad.";
-            } else {
-                document.getElementById('sTxt').innerText = "3 Whole Eggs + 2 Parathe + 1 Bowl Dahi.";
-                document.getElementById('iTxt').innerText = "3 Dates + 500ml Milkshake + Chana Chaat.";
-                document.getElementById('dTxt').innerText = "250g Chicken Curry + 2 Bowls Rice.";
-            }
-        } else { res.style.display = 'none'; fab.style.display = 'none'; }
-    }
+<div class="plan">
+<h3>Eid Special Offer</h3>
+<div class="price">₹8000</div>
+<ul>
+<li>1 Year Membership</li>
+<li>Regular Price ₹12000</li>
+<li>Limited Time Offer</li>
+</ul>
+<a class="btn" href="#">Join Now</a>
+<a class="btn whatsapp" href="https://wa.me/91XXXXXXXXXX">WhatsApp</a>
+</div>
 
-    function doZakat() {
-        const v = document.getElementById('zVal').value;
-        const r = document.getElementById('zRes');
-        if (v > 0) { r.style.display = 'block'; r.innerText = `ZAKAT: ₹${(v * 0.025).toFixed(2)}`; }
-        else { r.style.display = 'none'; }
-    }
+</div><style>
+.pricing-section{
+font-family: Arial;
+display:flex;
+flex-wrap:wrap;
+gap:20px;
+justify-content:center;
+}
 
-    async function generateProperPDF() {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        const n = document.getElementById('mName').value || "Athlete";
-        const w = document.getElementById('mWeight').value;
+.plan{
+border:1px solid #ddd;
+border-radius:10px;
+padding:20px;
+width:250px;
+text-align:center;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
 
-        doc.setFillColor(4, 22, 15); doc.rect(0, 0, 210, 45, 'F');
-        doc.setTextColor(212, 175, 55); doc.setFontSize(22); doc.text("AZHAR FITNESS CENTER", 105, 20, { align: "center" });
-        doc.setFontSize(10); doc.text("OFFICIAL RAMADAN ELITE DIET PLAN", 105, 30, { align: "center" });
+.plan h3{
+margin-bottom:10px;
+}
 
-        doc.setTextColor(0,0,0); doc.setFontSize(11);
-        doc.text(`Athlete: ${n} | Weight: ${w}kg | Protein Lock: ${(w*2.2).toFixed(0)}g`, 20, 55);
+.price{
+font-size:28px;
+font-weight:bold;
+color:#e63946;
+margin:10px 0;
+}
 
-        doc.setDrawColor(212, 175, 55); doc.rect(15, 65, 180, 55);
-        doc.setTextColor(184, 134, 11); doc.setFontSize(12); doc.text("MASNOON DUAS (AUTHENTIC)", 105, 75, { align: "center" });
-        doc.setFontSize(9); doc.setTextColor(0,0,0);
-        doc.text("Sehri: 'Wa bi-sawmi ghadinn nawaiytu min shahri ramadan'", 20, 85);
-        doc.text("Iftar (Old): 'Allahumma inni laka sumtu wa 'ala rizqika aftartu'", 20, 95);
-        doc.text("Iftar (Sunnah): 'Dhahabaz-zama’u wabtallatil-‘urooq wa thabatal-ajru in sha Allah'", 20, 105);
-        doc.text("Tarjuma: Pyaas chali gayi, ragein tar ho gayin aur sawab pakka ho gaya.", 20, 112);
+.plan ul{
+list-style:none;
+padding:0;
+}
 
-        doc.setTextColor(212, 175, 55); doc.setFontSize(14); doc.text("DIET SCHEDULE", 20, 140);
-        doc.setFontSize(10); doc.setTextColor(0,0,0);
-        doc.text(`SAHUR: ${document.getElementById('sTxt').innerText}`, 20, 150);
-        doc.text(`IFTARI: ${document.getElementById('iTxt').innerText}`, 20, 160);
-        doc.text(`DINNER: ${document.getElementById('dTxt').innerText}`, 20, 170);
+.plan li{
+margin:8px 0;
+}
 
-        doc.setTextColor(39, 174, 96); doc.text("GYM TIMINGS: 07:00 PM - 01:00 AM", 105, 220, { align: "center" });
-        doc.save(`AFC_Ramadan_${n}.pdf`);
-    }
-</script>
-</body>
-</html>
+.btn{
+display:inline-block;
+margin-top:10px;
+padding:10px 20px;
+background:#000;
+color:#fff;
+text-decoration:none;
+border-radius:5px;
+}
+
+.whatsapp{
+background:#25D366;
+}
+</style>
+
+<h2 style="text-align:center;">AFC Gym Membership Plans</h2>
+
+<div class="pricing-section">
+
+<div class="plan">
+<h3>Strength Training</h3>
+<div class="price">₹1200+</div>
+<ul>
+<li>1 Month – ₹1200</li>
+<li>3 Months – ₹2800</li>
+<li>6 Months – ₹5000</li>
+<li>12 Months – ₹9000</li>
+</ul>
+<a class="btn" href="#">Join Now</a>
+<a class="btn whatsapp" href="https://wa.me/91XXXXXXXXXX">WhatsApp</a>
+</div>
+
+<div class="plan">
+<h3>Strength + Cardio</h3>
+<div class="price">₹1800+</div>
+<ul>
+<li>1 Month – ₹1800</li>
+<li>3 Months – ₹4000</li>
+<li>6 Months – ₹8000</li>
+<li>12 Months – ₹12000</li>
+</ul>
+<a class="btn" href="#">Join Now</a>
+<a class="btn whatsapp" href="https://wa.me/91XXXXXXXXXX">WhatsApp</a>
+</div>
+
+<div class="plan">
+<h3>Personal Training</h3>
+<div class="price">₹8000</div>
+<ul>
+<li>1 Month Personal Training</li>
+<li>Customized Workout Plan</li>
+<li>Trainer Guidance</li>
+</ul>
+<a class="btn" href="#">Join Now</a>
+<a class="btn whatsapp" href="https://wa.me/917786888111">WhatsApp</a>
+</div>
+
+<div class="plan">
+<h3>Eid Special Offer</h3>
+<div class="price">₹8000</div>
+<ul>
+<li>1 Year Membership</li>
+<li>Regular Price ₹12000</li>
+<li>Limited Time Offer</li>
+</ul>
+<a class="btn" href="#">Join Now</a>
+<a class="btn whatsapp" href="https://wa.me/917786888111">WhatsApp</a>
+</div>
+
+</div>
